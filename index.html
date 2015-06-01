@@ -9,6 +9,7 @@
 	function loadResults(dataString){
 		data = 	dataString.split(",")
 		html ="";
+		$("#results").empty();
 		for (var i = 0; i < data.length; i++) {
 				// console.log(data[i]);
 				if(i !== 0){
@@ -105,10 +106,10 @@
 					<option value="kor">south korea</option>
 					<option value="prk">north korea</option>
 				</select>
-
+				<button type="button"onclick="findProducts()">Find Traded Products</button>
 				<div id="results">
 				</div>
-			<button type="button"onclick="findProducts()">Find Traded Products</button>
+			
 		</div>
 	</div>
 	

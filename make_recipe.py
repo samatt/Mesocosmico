@@ -30,7 +30,7 @@ for item in items:
 # for i in input_country:
 	# if i in country_lookup.keys():
 		# print '<option value="'+country_lookup[i]+'">'+i+'</option>'
-		
+
 input_products_reader = csv.DictReader(open(PRODUCTS_FILE))
 input_products_lookup = {}
 for row in input_products_reader:
@@ -92,7 +92,7 @@ if __name__ == '__main__':
 		if hs_id in hs_lookup.keys():
 			other_products.append(hs_lookup[hs_id])
 
-	print "Other exports : "
+	print "Exports : "
 	for product in other_products:
 		print product.encode('ascii','ignore')
 	# print " ".join(other_products)
