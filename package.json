@@ -1,0 +1,26 @@
+{
+  "name": "MesocosmicoRecipeMaker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "python-shell": "^0.1.0",
+    "express": "^4.12.4"
+  },
+  "devDependencies": {
+    "body-parser": "^1.12.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samatt/Mesocosmico.git"
+  },
+  "author": "Surya Mattu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samatt/Mesocosmico/issues"
+  },
+  "homepage": "https://github.com/samatt/Mesocosmico"
+}

@@ -1,3 +1,4 @@
+import sys
 import csv
 import os
 import random
@@ -26,9 +27,10 @@ for item in items:
 		value = item[u'display_id']
 		country_lookup[key] = value
 
-for i in input_country:
-	if i in country_lookup.keys():
-		print '<option value="'+country_lookup[i]+'">'+i+'</option>'
+# for i in input_country:
+	# if i in country_lookup.keys():
+		# print '<option value="'+country_lookup[i]+'">'+i+'</option>'
+		
 input_products_reader = csv.DictReader(open(PRODUCTS_FILE))
 input_products_lookup = {}
 for row in input_products_reader:
@@ -56,19 +58,30 @@ for item in items:
 	# print item[u'id'],item[u'name']
 
 if __name__ == '__main__':
-	input_country_name =random.choice(input_country)
-	output_country_name =random.choice(input_country)
+	
+	if len(sys.argv) <3 :
+		print "Not enough arguments using random countries"
+		input_country_name =random.choice(input_country)
+		output_country_name =random.choice(input_country)
+		input_country_abbrv = country_lookup[input_country_name]
+		output_country_abbrv = country_lookup[output_country_name]		
+	else:
+		# print sys.argv[1],type(sys.argv[1])
+		input_country_abbrv = sys.argv[1].encode('ascii','ignore')
+		output_country_abbrv = sys.argv[2].encode('ascii','ignore')
+	# print  sys.argv[1]
+	# if sys.argv[2]:
+		# print sys.argv[2]
+	
 	prod_id = random.choice(input_products_lookup.keys())
 	 # = random.choice()
 
-	
-	input_country_abbrv = country_lookup[input_country_name].encode('ascii','ignore')
-	output_country_abbrv = country_lookup[output_country_name].encode('ascii','ignore')
-	print input_country_abbrv,output_country_abbrv
+
+	# print input_country_abbrv,output_country_abbrv
 
 
 	req = "http://atlas.media.mit.edu/hs/export/2010/%s/%s/show"	%(input_country_abbrv,output_country_abbrv)
-	# print req
+	print req
 	r = requests.get(req, verify=False)
 	data = json.loads(r.text)
 	items =  data[u'data']
@@ -80,4 +93,6 @@ if __name__ == '__main__':
 			other_products.append(hs_lookup[hs_id])
 
 	print "Other exports : "
-	print " ".join(other_products)
+	for product in other_products:
+		print product.encode('ascii','ignore')
+	# print " ".join(other_products)

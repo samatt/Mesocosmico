@@ -6,27 +6,41 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script>
 
-	// function getCountries()
+	function loadResults(dataString){
+		data = 	dataString.split(",")
+		html ="";
+		for (var i = 0; i < data.length; i++) {
+				// console.log(data[i]);
+				if(i !== 0){
+					html+="<p>"+data[i]+"</p>"	
+				}
+				
+		};
+		$("#results").append(html);
+	}
 
 	function getProducts(source, dest) {
-		var path = "https://atlas.media.mit.edu/hs/export/2010/"+source+"/"+dest+"/show/"
+		// var path = "https://atlas.media.mit.edu/hs/export/2010/"+source+"/"+dest+"/show/"
+		var path = "https://localhost:3000/test"
 		// var content = JSON.stringify(data);				// convert JSON obj to string
 			
 		var request = $.ajax({
-			type: "GET",					// use the PUT method
-			crossDomain: true,
-			url: path,						// URL to call
-			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			url: "/test",
+			data:JSON.stringify({"src":source,"dst":dest}),
+			contentType: 'application/json' 
 			})
-			.done(function() {
+			.done(function(data) {
 				console.log( "success" );
+				console.log(data);
+				loadResults(data);
 			})
 			.fail(function() {
 				console.log( "error" );
 			})
-			.always(function() {
-				console.log( "complete" );
-			});
+			// .always(function() {
+			// 	console.log( "complete" );
+			// });
 	}
 
 	function findProducts(){
@@ -49,6 +63,9 @@
 	
 	<div class="wrapper">
 		<div id="main">
+				<div id="view-tut">
+					Source Country
+				</div>
 				<select id="source">
 					<option value="chn">china</option>
 					<option value="jpn">japan</option>
@@ -67,6 +84,9 @@
 					<option value="kor">south korea</option>
 					<option value="prk">north korea</option>
 				</select>
+				<div id="view-tut">
+					Destination Country
+				</div>
 				<select id="destination">
 					<option value="chn">china</option>
 					<option value="jpn">japan</option>
@@ -85,6 +105,9 @@
 					<option value="kor">south korea</option>
 					<option value="prk">north korea</option>
 				</select>
+
+				<div id="results">
+				</div>
 			<button type="button"onclick="findProducts()">Find Traded Products</button>
 		</div>
 	</div>
