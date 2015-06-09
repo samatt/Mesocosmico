@@ -12,11 +12,17 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname+'/index.html');
 });
 
+app.get('/categories', function (req, res) {
+	console.log("here!")
+  res.sendFile(__dirname+'/inputs/hs_categories.json');
+});
+
 app.post('/test', function (req, res) {
 	console.log("Making recipe...");
 	console.log(req.body);
 	console.log("Got response: " + res.statusCode);
 	console.log(req.params);
+
 	options = {}
 	options.scriptPath =  __dirname;
 	options.args =[]
@@ -25,11 +31,8 @@ app.post('/test', function (req, res) {
 	
 	PythonShell.run('make_recipe.py', options,function (err, results) {
   		if (err) throw err;
-  	// console.log('results: %j', results);
-  	// console.log(results.join(","))
-  		res.send(results.join(","));
+  		res.send(results[0]);
 	});
-  // res.send('Hello World again!');
 });
 
 	

@@ -4,20 +4,27 @@ import os
 import random
 import requests
 import json
+import pprint
 from BeautifulSoup import BeautifulSoup
 
 INPUTS_DIR=os.path.join(os.path.dirname(__file__),"inputs")
 PRODUCTS_FILE = "%s/%s"%(INPUTS_DIR,'hs_products.csv')
 COUNTRY_FILE = "%s/%s"%(INPUTS_DIR,'country.csv')
 SITC_FILE = "%s/%s"%(INPUTS_DIR,'hs_classification_list.csv')
-
+CATEGORIES_FILE = "%s/%s"%(INPUTS_DIR,'hs_categories.json')
 input_country = ["china","usa","japan","france","netherlands","russia","uk","mexico","uae","india","australia","brazil","turkey","nigeria","hong kong","israel","kenya","south korea","north korea"]
-
+# print CATEGORIES_FILE
 
 country_req = "https://atlas.media.mit.edu/attr/country/"
 country_lookup = {}
 country_res = requests.get(country_req, verify=False)
 data = json.loads(country_res.text)
+
+with open(CATEGORIES_FILE) as data_file:    
+    hs_categories = json.load(data_file)
+# print hs_categories
+
+
 items =  data[u'data']
 for item in items:
 	if u'id_num' in item.keys():
@@ -57,6 +64,14 @@ for item in items:
 	hs_lookup[key] = value
 	# print item[u'id'],item[u'name']
 
+
+def getProductCategory(hs_id,cat_name):
+	# print hs_id[2:4],cat_name
+	cat_id = hs_id[2:4]
+	for k,v in hs_categories.iteritems():
+		if cat_id in v:
+			return k
+
 if __name__ == '__main__':
 	
 	if len(sys.argv) <3 :
@@ -71,28 +86,34 @@ if __name__ == '__main__':
 		output_country_abbrv = sys.argv[2].encode('ascii','ignore')
 	# print  sys.argv[1]
 	# if sys.argv[2]:
-		# print sys.argv[2]
+	# print sys.argv[2]
 	
 	prod_id = random.choice(input_products_lookup.keys())
 	 # = random.choice()
 
-
 	# print input_country_abbrv,output_country_abbrv
+	# req = "http://atlas.media.mit.edu/hs/export/all/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
+	req = "http://atlas.media.mit.edu/hs/export/2010/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
+	# print req
 
-
-	req = "http://atlas.media.mit.edu/hs/export/2010/%s/%s/show"	%(input_country_abbrv,output_country_abbrv)
-	print req
 	r = requests.get(req, verify=False)
 	data = json.loads(r.text)
 	items =  data[u'data']
 
 	other_products = []
+	results = {}
 	for item in items:
 		hs_id = item[u'hs_id']
 		if hs_id in hs_lookup.keys():
-			other_products.append(hs_lookup[hs_id])
-
-	print "Exports : "
-	for product in other_products:
-		print product.encode('ascii','ignore')
+			cat = getProductCategory(hs_id,hs_lookup[hs_id])
+			cat = cat.encode('ascii','ignore')
+			product  = hs_lookup[hs_id].encode('ascii','ignore')
+			if cat in results.keys():
+				results[cat].append(product.replace("\'",""))
+			else:
+				results[cat.replace("\'","")] = [product.replace("\'","")]
+	print json.dumps(results)
+	# print "Exports : "
+	# for product in other_products:
+		# print product.encode('ascii','ignore')
 	# print " ".join(other_products)
