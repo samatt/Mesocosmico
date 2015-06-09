@@ -4,16 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Mesocosmico Recipe Maker</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 	<script>
 		categories = {}
 
 		$( document ).ready(function(){
-			$("#categories").change(function(){
-				var selectedCategory = $("#categories option:selected").val();
-				displayRandomProduct(selectedCategory);
-				// console.log(product);
-			})
+			$("#categories").change(generateNew);
+			$( ".products" ).hide();
 		});
 		
 		function getRandomInt(min, max) {
@@ -35,15 +32,28 @@
 			$("#selectedProduct").append("<p><em>"+product+"</em></p>");
 
 			$("#otherProducts").empty();
+			$("#otherCategory").empty();
 			var html="";
 			html+= "<p> Other possible items </p>"
+
+			var htmlCat="";
+			htmlCat+= "<p> From Category </p>"
 			for (cat in categories) {
 				if(cat !== currentCategory){
 					var otherProduct = getRandItem(cat);
-					html+="<li><em>"+ otherProduct+"</em></li>";
+					html+="<li>"+ otherProduct+"</li>";
+					htmlCat+= "<li>"+ cat+"</li>";
 				}
 			};
 			$("#otherProducts").append(html);
+			$("#otherCategory").append(htmlCat);
+
+
+		}
+
+		function generateNew(){
+			var selectedCategory = $("#categories option:selected").val();
+			displayRandomProduct(selectedCategory);
 		}
 
 		function loadOptions(data){
@@ -71,6 +81,7 @@
 				})
 				.done(function(data) {
 					console.log( "success" );
+					$( ".products" ).show();
 					loadOptions(data);
 				})
 				.fail(function() {
@@ -83,77 +94,95 @@
 			var dest = $("#destination option:selected").val()
 			// console.log(source);
 			// console.log(dest);
+			$("#selectedProduct").empty();
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
 			getProducts(source,dest);
 			
 		}
 	</script>
 </head>
 
-<body>
-	<div id="header">
-		<div id="view-tut">
-			Mesocosmico Recipe Maker
-		</div>
-	</div>
-	
-	<div class="wrapper">
-		<div id="main">
-				<div id="view-tut">
-					Source Country
-				</div>
-				<select id="source">
-					<option value="chn">china</option>
-					<option value="jpn">japan</option>
-					<option value="fra">france</option>
-					<option value="nld">netherlands</option>
-					<option value="rus">russia</option>
-					<option value="mex">mexico</option>
-					<option value="ind">india</option>
-					<option value="aus">australia</option>
-					<option value="bra">brazil</option>
-					<option value="tur">turkey</option>
-					<option value="nga">nigeria</option>
-					<option value="hkg">hong kong</option>
-					<option value="isr">israel</option>
-					<option value="ken">kenya</option>
-					<option value="kor">south korea</option>
-					<option value="prk">north korea</option>
-				</select>
-				<div id="view-tut">
-					Destination Country
-				</div>
-				<select id="destination">
-					<option value="chn">china</option>
-					<option value="jpn">japan</option>
-					<option value="fra">france</option>
-					<option value="nld">netherlands</option>
-					<option value="rus">russia</option>
-					<option value="mex">mexico</option>
-					<option value="ind">india</option>
-					<option value="aus">australia</option>
-					<option value="bra">brazil</option>
-					<option value="tur">turkey</option>
-					<option value="nga">nigeria</option>
-					<option value="hkg">hong kong</option>
-					<option value="isr">israel</option>
-					<option value="ken">kenya</option>
-					<option value="kor">south korea</option>
-					<option value="prk">north korea</option>
-				</select>
-				<button type="button"onclick="findProducts()">Find Traded Products</button>
-				<div id="view-tut">
-					Product Categories
-				</div>
-				<select id="categories">
-				</select>
-				<div id="selectedProduct">
-				</div>
 
-				<div id="otherProducts">
-				</div>
-			
-		</div>
-	</div>
+<body>
+	
+	<form class="pure-form pure-form-stacked">
+		<fieldset>
+		 	<legend>Mesocosmico Recipe Maker</legend>
+			<div class="pure-g">
+			 	<div class="pure-u-1 pure-u-md-1-2">
+	            	<label for="source">Source Country</label>
+	            	<select id="source">
+						<option value="chn">China</option>
+						<option value="jpn">Japan</option>
+						<option value="fra">France</option>
+						<option value="nld">Netherlands</option>
+						<option value="rus">Russia</option>
+						<option value="mex">Mexico</option>
+						<option value="ind">India</option>
+						<option value="aus">Australia</option>
+						<option value="bra">Brazil</option>
+						<option value="tur">Turkey</option>
+						<option value="nga">Nigeria</option>
+						<option value="hkg">Hong Kong</option>
+						<option value="isr">Israel</option>
+						<option value="ken">Kenya</option>
+						<option value="kor">South Korea</option>
+						<option value="prk">North Korea</option>
+					</select>
+	        	</div>
+
+	        	<div class="pure-u-1 pure-u-md-1-2">
+	            	<label for="destination">Destination Country</label>
+	            	<select id="destination" >
+						<option value="chn">China</option>
+						<option value="jpn">Japan</option>
+						<option value="fra">France</option>
+						<option value="nld">Netherlands</option>
+						<option value="rus">Russia</option>
+						<option value="mex">Mexico</option>
+						<option value="ind">India</option>
+						<option value="aus">Australia</option>
+						<option value="bra">Brazil</option>
+						<option value="tur">Turkey</option>
+						<option value="nga">Nigeria</option>
+						<option value="hkg">Hong Kong</option>
+						<option value="isr">Israel</option>
+						<option value="ken">Kenya</option>
+						<option value="kor">South Korea</option>
+						<option value="prk">North Korea</option>
+					</select>
+	        	</div>
+	        </div>
+	        	<button type="button" onclick="findProducts()" class="pure-button pure-button-primary pure-u-1-8">Find Traded Products</button>
+	        	
+
+	        	<div class="pure-u-1 pure-u-md-1-2 products">
+	        	    <label for="categories">Product Categories</label>
+					<select id="categories">
+					</select>
+	        	</div>
+				
+				<button type="button" onclick="generateNew()" class="pure-button pure-button-primary pure-u-1-8 products">Generate</button>
+	        	<div class="pure-g">
+	        	<div class="pure-u-1-3 pure-u-md-1-3">
+	        		<div id="selectedProduct">
+					</div>
+        		</div>
+
+        		<div class="pure-u-1-3 pure-u-md-1-3 products">
+        			<div id="otherProducts">
+        			</div>
+        		</div>
+
+        		<div class="pure-u-1-3 pure-u-md-1-3 products">
+        			<div id="otherCategory">
+        			</div>
+        		</div>
+        	</div>
+        	 
+		</fieldset>
+	</form>
 	
 </body>
 </html>
