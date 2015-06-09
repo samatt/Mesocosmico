@@ -98,7 +98,8 @@
 				}
 			};
 			$("#categories").append(html);
-
+			$("select#categories").attr('selectedIndex', 0);
+			getCategoryProducts();
 		}
 
 		function getProducts(source, dest) {
@@ -113,6 +114,7 @@
 					console.log( "success" );
 					$( ".products" ).show();
 					loadOptions(data);
+
 				})
 				.fail(function() {
 					console.log( "error" );
