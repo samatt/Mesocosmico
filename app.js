@@ -17,7 +17,7 @@ app.get('/categories', function (req, res) {
   res.sendFile(__dirname+'/inputs/hs_categories.json');
 });
 
-app.post('/test', function (req, res) {
+app.post('/products', function (req, res) {
 	console.log("Making recipe...");
 	console.log(req.body);
 	console.log("Got response: " + res.statusCode);
@@ -35,7 +35,25 @@ app.post('/test', function (req, res) {
 	});
 });
 
-	
+
+app.post('/species', function (req, res) {
+	console.log("Getting species...");
+	console.log(req.body);
+	console.log("Got response: " + res.statusCode);
+	console.log(req.params);
+	options = {}
+	options.scriptPath =  __dirname;
+	options.args =[]
+	options.args.push(req.body.src);
+	options.args.push(req.body.dst);
+	options.args.push(2005);
+	PythonShell.run('get_cites_data.py', options,function (err, results) {
+  		if (err) throw err;
+  		console.log("HERE")
+  		res.send(results);
+	});
+});
+
 var server = app.listen(3000, function () {
 
   var host = server.address().address;
