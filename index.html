@@ -12,6 +12,7 @@
 			$("#categories").change(getCategoryProducts);
 			$(".products").hide();
 			$(".species").hide();
+			$(".arms").hide();
 			$(".tableHead").hide();
 		});
 		
@@ -105,34 +106,96 @@
 			
 			columns = data["shipment_comptab_export"]["column_headers"]
 			// console.log(columns);
-			rows = data["shipment_comptab_export"]["rows"]
 			$("#speciesTable").empty();
-			var html="";
-			for (var i = 0; i < rows.length; i++) {
-				// console.log(rows[i]);
-
-				if(rows[i]["Source"] === "I" ||
-					 rows[i]["Source"] === "O" ||
-					 rows[i]["Source"] === "U" ||
-					 rows[i]["Source"] === "W" ||
-					 rows[i]["Source"] === "X" ){
-					html+="<tr>";
-					for (var j = 0; j < columns.length; j++) {
-						console.log(columns[j]);
-
-						if(columns[j] === "Taxon" || columns[j] === "Class" ||
-							columns[j] === "Term" || columns[j] === "Purpose" ||
-							columns[j] === "Source"){
-							html+="<td>"+rows[i][columns[j]]+"</td>";
-						}
-						
-					};
-					html+="</tr>";
-
-				}
-			};
-			$("#speciesTable").append(html);
 			
+			if (data["hasData"] === false){
+				console.log("No data!");
+				html+="<tr>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="</tr>";
+
+			}
+			else{
+				rows = data["shipment_comptab_export"]["rows"]
+				
+				var html="";
+				for (var i = 0; i < rows.length; i++) {
+					// console.log(rows[i]);
+
+					if(rows[i]["Source"] === "I" ||
+						 rows[i]["Source"] === "O" ||
+						 rows[i]["Source"] === "U" ||
+						 rows[i]["Source"] === "W" ||
+						 rows[i]["Source"] === "X" ){
+						html+="<tr>";
+						for (var j = 0; j < columns.length; j++) {
+							if(columns[j] === "Taxon" || columns[j] === "Class" ||
+								columns[j] === "Term" || columns[j] === "Purpose" ||
+								columns[j] === "Source"){
+								html+="<td>"+rows[i][columns[j]]+"</td>";
+							}
+						};
+						html+="</tr>";
+					}
+				};
+			}
+			$("#speciesTable").append(html);
+		}
+		function loadArms(data){
+			
+			$("#armsTable").empty();
+			var html="";
+			if(data["hasData"]){
+				rows = data["data"]
+				
+
+				for (var i = rows.length - 1; i >= 0; i--) {
+					if(rows[i]["value"] === "Value"){
+						continue;
+					}
+					html+="<tr>";
+					html+="<td>"+rows[i]["year"]+"</td>";
+					html+="<td>"+rows[i]["type"]+"</td>";
+					html+="<td>"+rows[i]["units"]+"</td>";
+					html+="<td>"+rows[i]["value"]+"</td>";
+					html+="</tr>";
+				};
+			}
+			else{
+				html+="<tr>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="</tr>";
+			}
+			$("#armsTable").append(html);
+		}
+		function getArms(source,dest){
+
+			var request = $.ajax({
+				type: "POST",
+				url: "/arms",
+				data:JSON.stringify({"src":source,"dst":dest}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					// $(".tableHead").show();
+					// $( ".species" ).show();	
+					$( ".arms" ).show();	
+					console.log(JSON.parse(data));
+					loadArms(JSON.parse(data));
+					
+
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
 		}
 
 		function getSpecies(source,dest){
@@ -147,7 +210,7 @@
 					console.log( "success" );
 					// $(".tableHead").show();
 					$( ".species" ).show();	
-					console.log(JSON.parse(data));
+					console.log(data);
 					loadSpecies(JSON.parse(data));
 					
 
@@ -175,7 +238,22 @@
 					console.log( "error" );
 				})
 		}
-		
+		function findArms(){
+			var source = $("#source option:selected").val() 
+			var dest = $("#destination option:selected").val()
+			$("#selectedProduct").empty();
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
+			$("#productTable").empty();
+			$("#speciesTable").empty();
+			$(".products").hide();
+			$(".species").hide();
+			$(".arms").hide();
+			// $(".tableHead").hide();
+			// source,dest
+			getArms(source,dest);
+		}
+
 		function findProducts(){
 			var source = $("#source option:selected").val() 
 			var dest = $("#destination option:selected").val()
@@ -186,6 +264,7 @@
 			$("#speciesTable").empty();
 			$(".products").hide();
 			$(".species").hide();
+			$(".arms").hide();
 			$(".tableHead").hide();
 			getProducts(source,dest);
 		}
@@ -200,7 +279,8 @@
 			$("#speciesTable").empty();
 			$(".products").hide();
 			$(".species").hide();
-			$(".tableHead").hide()
+			$(".arms").hide();
+			// $(".tableHead").hide()
 			getSpecies(source,dest)
 		}
 
@@ -233,6 +313,8 @@
 						<option value="ken">Kenya</option>
 						<option value="kor">South Korea</option>
 						<option value="prk">North Korea</option>
+						<option value="gbr">United Kingdom</option>
+						<option value="usa">United States</option>
 					</select>
 	        	</div>
 
@@ -255,12 +337,14 @@
 						<option value="ken">Kenya</option>
 						<option value="kor">South Korea</option>
 						<option value="prk">North Korea</option>
+						<option value="gbr">United Kingdom</option>
+						<option value="usa">United States</option>
 					</select>
 	        	</div>
 	        </div>
-	        	<button type="button" onclick="findProducts()" class="pure-button pure-button-primary pure-u-2-1">Get Product Categories</button>
-	        	<button type="button" onclick="findSpecies()" class="pure-button pure-button-primary pure-u-2-2">Get Species Categories</button>
-
+	        	<button type="button" onclick="findProducts()" class="pure-button pure-button-primary pure-u-3-1">Get Product Categories</button>
+	        	<button type="button" onclick="findSpecies()" class="pure-button pure-button-primary pure-u-3-2">Get Species Categories</button>
+	        	<button type="button" onclick="findArms()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>
 	        	<div class="pure-u-1 pure-u-md-1-2 products">
 	        	    <label for="categories">Product Categories</label>
 					<select id="categories">
@@ -278,8 +362,8 @@
 		</fieldset>
 	</form>
 	<!-- <div class="pure-g"> -->
-		<table class="pure-table pure-table-bordered tableHead">
-			<thead>
+		<table class="pure-table pure-table-bordered products">
+			<thead class="tableHead">
 				<tr>
 					<th>Category</th>
 					<th>Randomly Selected Companion</th>
@@ -291,8 +375,8 @@
 		</table>
 
 		
-		<table class="pure-table pure-table-bordered tableHead species">
-			<thead>
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
 				<tr>
 					<th>Source Category</th>
 					<th>Description</th>
@@ -326,8 +410,8 @@
 			</tbody>
 		</table>
 
-		<table class="pure-table pure-table-bordered tableHead species">
-			<thead>
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
 				<tr>
 					<th>Purpose Category</th>
 					<th>Description</th>
@@ -385,8 +469,8 @@
 			</tbody>
 		</table>
 
-		<table class="pure-table pure-table-bordered tableHead species">
-			<thead>
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
 				<tr>
 					<!-- <th> "Year"</th> -->
 					<!-- <th> "App."</th> -->
@@ -408,6 +492,18 @@
 				</tr>
 			</thead>
 			<tbody id="speciesTable">
+			</tbody>
+		</table>
+		<table class="pure-table pure-table-bordered arms">
+			<thead>
+				<tr>
+					<th>Year</th>
+					<th>Weapons Type</th>
+					<th>Units</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody id="armsTable">
 			</tbody>
 		</table>
 	<!-- </div> -->

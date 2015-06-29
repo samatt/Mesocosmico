@@ -62,6 +62,8 @@ def get_cites_data(src,dst,start_time):
 			# print "Cant find anything!"
 			pass
 			
+			print json.dumps({"hasData":False})
+			
 
 
 if __name__ == '__main__':
@@ -76,6 +78,10 @@ if __name__ == '__main__':
 		src = sys.argv[1].encode('ascii','ignore')
 		dst = sys.argv[2].encode('ascii','ignore')
 		start = sys.argv[3].encode('ascii','ignore')
+		if src == "prk":
+			src = "pkr"
+		elif dst == "prk":
+			src = "pkr"
 		get_cites_data(src,dst,int(start))
 
 # pprint(html)
