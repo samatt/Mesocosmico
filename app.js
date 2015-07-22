@@ -1,9 +1,12 @@
 var express = require('express');
+var cors = require('cors');
 var PythonShell = require('python-shell');
 var app = express();
 var url = require('url') 
 
 var bodyParser = require('body-parser');
+app.use(cors());
+
 app.use(bodyParser.json());
 // app.use(express.json()); 
 // app.use(express.static(__dirname + '/public'));
