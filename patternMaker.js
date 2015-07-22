@@ -20,7 +20,7 @@ var patternMaker = function(cats){
 	var dummy = svg.text(0,0,"A");
 	dummy.addClass("text");
 
-	var lineHeight = 110;
+	var lineHeight = 80;
 	parseCSV(cats);
 	function parseCSV(data){
 		// rows = data.split("\n");
@@ -55,8 +55,9 @@ var patternMaker = function(cats){
 	}
 
 	function drawIcon(icon,i,j){
-		var xpos = i*200;
-		var ypos = j*200;
+		// var xpos = i*200;
+		var xpos = i*getRandomInt(180,200);
+		var ypos = j*128;
 		icon.attr({
 			x: xpos,
 			y: ypos,
@@ -82,7 +83,7 @@ var patternMaker = function(cats){
 		var w = document.getElementById("svg").width.baseVal.value;
 		var h = document.getElementById("svg").height.baseVal.value;
 		var phrase_idx = 0;
-		var rows = Math.ceil(h/lineHeight);
+		var rows = Math.ceil(h/lineHeight) +1;
 
 		for (var j = 0; j < rows; j++) {
 			
@@ -112,7 +113,7 @@ var patternMaker = function(cats){
 		var icon_h = 200;
 		var icon_idx = 0;
 		var rows = Math.floor(w/icon_w);
-		var cols = Math.floor(h/icon_h);
+		var cols = Math.floor(h/icon_h) ;
 		var shuffled = shuffleArray(icons);
 		for (var j = 0; j < cols; j++) {
 			for (var i = 0; i < rows; i++) {
@@ -126,7 +127,7 @@ var patternMaker = function(cats){
 
 				var xpos = i*icon_w +icon_w/2 ;
 				var ypos = j*icon_h +icon_h/2;
-				var c = svg.circle(xpos, ypos, 10);
+				var c = svg.circle(xpos, ypos, 2);
 				c.attr({
 					// 'fill':'none',
 					'stroke':'black'
