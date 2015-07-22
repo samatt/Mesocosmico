@@ -27,9 +27,7 @@ input_country_ids = {"chn":710,
 				"prk":731}
 #no hkg data
 
-# "hkg":167,
 def get_cites_data(src=input_country_ids["tur"],dst=input_country_ids["jpn"]):
-	# print src,dst
 	src = input_country_ids[src]
 	dst = input_country_ids[dst]
 
@@ -81,13 +79,7 @@ def get_cites_data(src=input_country_ids["tur"],dst=input_country_ids["jpn"]):
 					results["data"].append(r)
 	except Exception, e:
 		pass
-	# if len(results.keys()) >0:
-	# 	# pprint(results)		
-	# 	pass
-	# else:
-	# 	results["hasData"] = False
 	print json.dumps(results)
-	# pprint(results)
 if __name__ == '__main__':
 
 	if len(sys.argv) <3 :
