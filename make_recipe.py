@@ -104,16 +104,18 @@ if __name__ == '__main__':
 	results = {}
 	for item in items:
 		hs_id = item[u'hs_id']
+		hs_4_dig_id =  hs_id[-4:]
 		if hs_id in hs_lookup.keys():
 			cat = getProductCategory(hs_id,hs_lookup[hs_id])
 			cat = cat.encode('ascii','ignore')
 			product  = hs_lookup[hs_id].encode('ascii','ignore')
 			if cat in results.keys():
-				results[cat].append(product.replace("\'",""))
+				results[cat]["products"].append(product.replace("\'",""))
 			else:
-				results[cat.replace("\'","")] = [product.replace("\'","")]
+				results[cat.replace("\'","")] ={}
+				results[cat.replace("\'","")]["products"] = [product.replace("\'","")]
+				results[cat.replace("\'","")]["hs_6_id"] = hs_id
+				results[cat.replace("\'","")]["hs_4_id"] = hs_4_dig_id
+				
+	# pprint.pprint(results)
 	print json.dumps(results)
-	# print "Exports : "
-	# for product in other_products:
-		# print product.encode('ascii','ignore')
-	# print " ".join(other_products)
