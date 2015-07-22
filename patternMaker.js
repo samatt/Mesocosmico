@@ -148,7 +148,7 @@ var patternMaker = function(cats){
 		fragments[ids[idx].toString()] = loadedFragment;	
 		if(idx < ids.length-1){
 			idx = idx +1 ;
-			Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb_full)	
+			Snap.load("http://45.55.165.85:3000/getsvg?"+ids[idx],cb_full)	
 		}
 		else{
 			populateIcons();
@@ -164,7 +164,7 @@ var patternMaker = function(cats){
 		icons.push(el);
 		if(idx < ids.length-1){
 			idx = idx +1 ;
-			Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb)	
+			Snap.load("http://45.55.165.85:3000/getsvg?"+ids[idx],cb)	
 
 		}
 		else{
@@ -180,7 +180,7 @@ var patternMaker = function(cats){
 		};
 
 		drawTextGrid();
-		Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb_full);
+		Snap.load("http://45.55.165.85:3000/getsvg?"+ids[idx],cb_full);
 
 	}
 	return {
