@@ -36,11 +36,11 @@ app.get('/getsvg',function(req,res){
 	res.sendFile(__dirname+'/svg/'+svg_id+'.svg');
 })
 
-app.get('/test.js',function(req,res){
+app.get('/patternMaker.js',function(req,res){
 	var svg_id = req.body;
 	console.log(req.url);
 	svg_id = url.parse(req.url).query
-	res.sendFile(__dirname+'/test.js');
+	res.sendFile(__dirname+'/patternMaker.js');
 })
 
 app.post('/products', function (req, res) {
