@@ -3,34 +3,43 @@ var patternMaker = function(cats){
 	
 	var params = {
 		"icon_viewbox" : "0 0 128 128",
-		"w" : 1440,
-		"h" : 1000,
 		"class":"canvas"
 	}
 
 	var svg = Snap("svg");	
 	svg.addClass("canvas");
-
+	
+	//SVG Params
+	var width = document.getElementById("svg").width.baseVal.value;
+	var height = document.getElementById("svg").height.baseVal.value;
+	
+	//Icons Params
+	var i_w = 128;
+	var i_h = 128;
+	var i_rows = Math.ceil(width/i_w)  ;
+	var i_cols = Math.ceil(height/i_h)  ;
 	var ids =['0101','0102','0103','0104','0105','0106','0201','0202','0203']
+	
+	//Text Params
+	var t_Height = 80;
+	var t_rows = Math.ceil(height/t_Height) +1;
 	
 	var idx = 0;
 	var icons = [];
 	var phrases = [];
 	var categories = {};
+	var fragments = {}
 	var dummy = svg.text(0,0,"A");
 	dummy.addClass("text");
 
-	var lineHeight = 80;
-	parseCSV(cats);
+	
 	function parseCSV(data){
-		// rows = data.split("\n");
 		rows = data.replace(/\n/g,'#').split('#');
 
 		for (i in rows){
 			cols = rows[i].split(",");
 			categories[cols[0].toString()] = cols[1];
 		}
-		// console.log(Object.keys(categories));
 	}
 	function shuffleArray(array) {
 	    for (var i = array.length - 1; i > 0; i--) {
@@ -47,123 +56,112 @@ var patternMaker = function(cats){
 	}
 	
 	function isLongEnough(line){
-
 		dummy.attr({text:line})
-		//FIXME: Make dynamic instead of hard coding width
-
 		return dummy.node.getBBox().width > document.getElementById("svg").width.baseVal.value ?true:false;
 	}
 
-	function drawIcon(icon,i,j){
-		// var xpos = i*200;
-		var xpos = i*getRandomInt(180,200);
-		var ypos = j*128;
-		icon.attr({
-			x: xpos,
-			y: ypos,
-			class:"test"
-		})		
-
-	}
-
 	function drawText(j,line){
-
-		ypos = Math.ceil(j*lineHeight);
-		// console.log(line);
+		ypos = Math.ceil(j*t_Height);
 		var text = svg.text(0, ypos, line);
 		text.attr({
 				'x': 0,
 				'y' : ypos,
-				// 'font-size': 150,
 				"class":"text"
 		});
-
 	}
-	function drawTextGrid(){
-		var w = document.getElementById("svg").width.baseVal.value;
-		var h = document.getElementById("svg").height.baseVal.value;
-		var phrase_idx = 0;
-		var rows = Math.ceil(h/lineHeight) +1;
 
-		for (var j = 0; j < rows; j++) {
-			
+	function drawTextGrid(){
+		for (var j = 0; j < t_rows; j++) {
 			shuffled = shuffleArray(phrases);
 			var line = []
 			for (var i = 0; i < shuffled.length; i++) {
-				
 				line.push(phrases[i])
 				var l = line.join(" ").toUpperCase();
 				if(isLongEnough(l)){
-					
 					drawText(j,l);
 					break;
 				}
-				
 			};
 		}
 	}
-	function drawIcons(){
-		var w = document.getElementById("svg").width.baseVal.value;
-		var h = document.getElementById("svg").height.baseVal.value;
-		
-		
-		// var textBBox =  getLetterBBox("!");
+	
+	function placeIcon(icon,i,j){
+		// var xpos = i*i_w;
+		var xpos = i*getRandomInt(180,200);
+		var ypos = j*i_h;
+		icon.attr({
+			x: xpos,
+			y: ypos,
+			class:"test"
+		});
+	}
 
-		var icon_w = 200;
-		var icon_h = 200;
-		var icon_idx = 0;
-		var rows = Math.floor(w/icon_w);
-		var cols = Math.floor(h/icon_h) ;
-		var shuffled = shuffleArray(icons);
-		for (var j = 0; j < cols; j++) {
-			for (var i = 0; i < rows; i++) {
-				
+	function drawIcons(){
+		var i_idx = 0;
+		var shuffled = shuffleArray(icons);		
+		for (var j = 0; j < i_cols; j++) {
+			for (var i = 0; i < i_rows; i++) {				
 				//Prevents duplicate
 				if(i ==0 && j==0){
 					continue;
 				}
-
-				//DEBUG 
-
-				var xpos = i*icon_w +icon_w/2 ;
-				var ypos = j*icon_h +icon_h/2;
-				var c = svg.circle(xpos, ypos, 2);
-				c.attr({
-					// 'fill':'none',
-					'stroke':'black'
-				})
-				//DEBUG 
-				rand = getRandomInt(1,100);
-				
-				if ( rand === 1){
-					console.log(rand)
-					// break;
-					continue;
+				rand = getRandomInt(1,10);
+				// if ( rand === 1){
+				// 	console.log(rand)
+				// 	// break;
+				// 	continue;
+				// }
+				if(i_idx < shuffled.length-1){
+					placeIcon(shuffled[i_idx],i,j);
+					i_idx++;	
 				}
-
-				if(icon_idx < shuffled.length-1){
-
-					drawIcon(shuffled[icon_idx],i,j);
-					icon_idx++;	
-				}
-				
-				
 			};
 		};
-
 	}
 
-	function cb(loadedFragment){
+	function addIcon(loadedFragment,index,g_idx){
+    	svg.append(loadedFragment);
+    	var elId = "#Layer";
+    	elId += index.replace(/0/g,"_");
+    	var el = svg.select(elId);
+    	el_new = el.clone();
+    	elId += "_"+g_idx;
+    	if(el_new){
+    		el_new.attr({"id":elId})
+    		icons.push(el_new);	
+    	}
+    }
+    function populateIcons(){
+    	var g_idx =0;
+		for (var j = 0; j < i_cols; j++) {
+			for (var i = 0; i < i_rows; i++) {
+				var f_ids = Object.keys(fragments)
+				var f_idx = getRandomInt(0,f_ids.length);
+				var f = f_ids[f_idx];
+				addIcon(fragments[f],f,g_idx.toString());
+				g_idx++;
+			}
+		}
+    }
+	
+    function cb_full(loadedFragment){
+		fragments[ids[idx].toString()] = loadedFragment;	
+		if(idx < ids.length-1){
+			idx = idx +1 ;
+			Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb_full)	
+		}
+		else{
+			populateIcons();
+			drawIcons();
+		}
+    }
 
+	function cb(loadedFragment){
 		svg.append( loadedFragment );
 		var elId = "#Layer";
-
-		// phrases.push(categories[ids[idx]]);
 		elId += ids[idx].replace(/0/g,"_");
-		
 		var el = svg.select(elId);
 		icons.push(el);
-		
 		if(idx < ids.length-1){
 			idx = idx +1 ;
 			Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb)	
@@ -174,19 +172,19 @@ var patternMaker = function(cats){
 		}
 	}
 
-	var loadIcons = function(iconsToLoad){
+	var generate = function(iconsToLoad){
+		parseCSV(cats);
 		ids = iconsToLoad || ids ;
-		// console.log(Object.keys(categories);
 		for (var i = 0; i < ids.length; i++) {
 			phrases.push(categories[ids[i]]);
 		};
 
 		drawTextGrid();
-		Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb);
+		Snap.load("http://localhost:3000/getsvg?"+ids[idx],cb_full);
 
 	}
 	return {
 		svg:svg,
-		loadIcons:loadIcons
+		generate:generate
 	};
 };
