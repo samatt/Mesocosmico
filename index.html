@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 	<script>
 		categories = {}
-
+		var s; 
 		$( document ).ready(function(){
 			$("#categories").change(getCategoryProducts);
 			$(".products").hide();
@@ -31,7 +31,8 @@
 		function displayProducts(currentCategory){
 			$("#selectedProduct").empty();
 			var html = "";
-			var catProducts = categories[currentCategory];
+			var catProducts = categories[currentCategory]["products"];
+			
 			for (var i =0 ; i< catProducts.length; i++) {				
 				html+="<option>"+ catProducts[i]+"</option>";
 			};
@@ -48,7 +49,7 @@
 					var otherProduct = getRandItem(cat);
 					html+="<td>"+cat+"</td>";
 					html+="<td>"+otherProduct+"</td>";
-					html+="<td>"+categories[cat].join(" , ")+"</td>";
+					html+="<td>"+categories[cat]["products"].join(" , ")+"</td>";
 					html+="</tr>";
 				}
 			};
@@ -88,7 +89,9 @@
 		}
 
 		function loadOptions(data){
+			
 			categories = data;
+			console.log(data);
 			var cats = Object.keys(data);
 			$("#categories").empty();
 			html ="";
@@ -116,7 +119,6 @@
 				html+="<td> No Data </td>";
 				html+="<td> No Data </td>";
 				html+="</tr>";
-
 			}
 			else{
 				rows = data["shipment_comptab_export"]["rows"]
@@ -268,6 +270,8 @@
 			$(".tableHead").hide();
 			getProducts(source,dest);
 		}
+		icons = []
+		
 
 		function findSpecies(){
 			var source = $("#source option:selected").val() 
@@ -283,7 +287,26 @@
 			// $(".tableHead").hide()
 			getSpecies(source,dest)
 		}
+		function loadSvgs(){
+			icons = [];
+			var request = $.ajax({
+				type: "GET",
+				url: "/getsvg",
+				data:JSON.stringify({"id":id}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					$( ".products" ).show();
+					loadOptions(data);
 
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+
+		}
 	</script>
 </head>
 
@@ -345,6 +368,8 @@
 	        	<button type="button" onclick="findProducts()" class="pure-button pure-button-primary pure-u-3-1">Get Product Categories</button>
 	        	<button type="button" onclick="findSpecies()" class="pure-button pure-button-primary pure-u-3-2">Get Species Categories</button>
 	        	<button type="button" onclick="findArms()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>
+	        	<button type="button" onclick="drawPattern()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>
+
 	        	<div class="pure-u-1 pure-u-md-1-2 products">
 	        	    <label for="categories">Product Categories</label>
 					<select id="categories">
