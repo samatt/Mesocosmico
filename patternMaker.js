@@ -5,8 +5,8 @@ var patternMaker = function(cats){
 		"icon_viewbox" : "0 0 128 128",
 		"class":"canvas"
 	}
-	// var url = "http://45.55.165.85:3000	/getsvg?"
-	var url = "http://localhost:3000/getsvg?"
+	var url = "http://45.55.165.85:3000	/getsvg?"
+	// var url = "http://localhost:3000/getsvg?"
 	var svg = Snap("svg");	
 	svg.addClass("canvas");
 	
