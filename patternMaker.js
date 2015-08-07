@@ -8,12 +8,12 @@ var patternMaker = function(cats,svgElId){
 	var url = "http://45.55.165.85:3000/getsvg?";
 	// var url = "http://localhost:3000/getsvg?";
 	var svg = Snap(svgElId);	
-	// svg.addClass("canvas");
+	// svg.attr({"position": 'absolute'});
 	
 	//SVG Params
-	var width = document.getElementById(svgElId).width.baseVal.value;
-	var height = document.getElementById(svgElId).height.baseVal.value;
-	
+	var width = document.getElementById(svgElId.replace("#","")).width.baseVal.value;
+	var height = document.getElementById(svgElId.replace("#","")).height.baseVal.value;
+	console.log(document.getElementById(svgElId.replace("#","")));
 	//Icons Params
 	var i_w = 128;
 	var i_h = 128;
@@ -70,7 +70,7 @@ var patternMaker = function(cats,svgElId){
 	
 	function isLongEnough(line){
 		dummy.attr({text:line})
-		return dummy.node.getBBox().width > document.getElementById("svg").width.baseVal.value ?true:false;
+		return dummy.node.getBBox().width > document.getElementById(svgElId.replace("#","")).width.baseVal.value ?true:false;
 	}
 
 	function drawText(j,line){
@@ -232,6 +232,7 @@ var patternMaker = function(cats,svgElId){
 	}
 
 	var generateFromList = function(iconsToLoad,srcCountry,dstCountry){
+		clear();
 		if(src === "default"){
 			svg.removeClass("default");	
 		}
@@ -266,6 +267,7 @@ var patternMaker = function(cats,svgElId){
 	}
 
 	var generate = function(){
+		clear();
 		parseCSV(cats);
 		for (var i = 0; i < all_ids.length; i++) {
 			phrases.push(categories[all_ids[i]]);

@@ -1,3 +1,11 @@
+/*#svg{
+	position: :absolute;
+}
+*/
+#svgother{
+	position:absolute;
+}
+
 .font{
 		@import url(http://fonts.googleapis.com/css?family=Hind:400,700);
 		font-family: 'Hind', sans-serif;
