@@ -64,7 +64,7 @@
 				})
 				.done(function(data) {
 					$('#names').empty()
-					$('#names').append("random");
+					$('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
 					p1 = patternMaker(data,'#svgother');
 					p1.generate();
 					
@@ -76,7 +76,7 @@
 		$(window).bind( 'hashchange', function(e) { 
 	    	var anchor = document.location.hash;
 	            // p.clear();
-	            countries = anchor.replace("#","").split('-')
+	            countries = anchor.toLowerCase().replace("#","").split('-')
 				updateSvg(countries[0],countries[1],p);
 	            updateSvg(countries[1],countries[0],p1);
 				$('#names').empty();
@@ -117,6 +117,7 @@
 
 
 <body>
+<p style="text-align:center;"> Countries: CHN , USA, JPN, FRA, ARE, NLD, GBR, MEX, IND, AUS, BRA, TUR, RUS</p>
 <p id="names" style="text-align:center;"></p>
 <svg id="svg">
 </svg>
