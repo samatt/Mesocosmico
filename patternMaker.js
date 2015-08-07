@@ -1,47 +1,59 @@
-var patternMaker = function(cats){
+var patternMaker = function(cats,svgElId){
 	
 	
 	var params = {
 		"icon_viewbox" : "0 0 128 128",
 		"class":"canvas"
 	}
-	var url = "http://45.55.165.85:3000	/getsvg?"
+	var url = "http://45.55.165.85:3000/getsvg?"
 	// var url = "http://localhost:3000/getsvg?"
-	var svg = Snap("svg");	
-	svg.addClass("canvas");
+	var svg = Snap(svgElId);	
+	// svg.addClass("canvas");
 	
 	//SVG Params
-	var width = document.getElementById("svg").width.baseVal.value;
-	var height = document.getElementById("svg").height.baseVal.value;
+	var width = document.getElementById(svgElId).width.baseVal.value;
+	var height = document.getElementById(svgElId).height.baseVal.value;
 	
 	//Icons Params
 	var i_w = 128;
 	var i_h = 128;
 	var i_rows = Math.ceil(width/i_w)  ;
 	var i_cols = Math.ceil(height/i_h)  ;
-	// var ids =['0101','0102','0103','0104','0105','0106','0201','0202','0203']
-	var ids = ['0101','0102','0103','0104','0105','0106','0201','0202','0203','0204','0205','0206','0207','0208','0209','0210','0301','0302','0303','0304','0305','0306','0307','0401','0402','0403','0404','0405','0406','0407','0408','0409','0410','0501','0502','0503','0504','0505','0506','0507','0508','0509','0510','0511','0601','0602','0603','0604','0701','0702','0703','0704','0705','0706','0707','0708','0709','0710','0711','0712','0713','0714','0801','0802','0803','0804','0805','0806','0807','0808','0809','0810','0811','0812','0813','0814','0901','0902','0903','0904','0905','0906','0907','0908','0909','0910','1001','1002','1003','1004','1005','1006','1007','1008']
+
+	var all_ids = ['0101','0102','0103','0104','0105','0106','0201','0202','0203','0204','0205','0206','0207','0208','0209','0210','0301','0302','0303','0304','0305','0306','0307','0401','0402','0403','0404','0405','0406','0407','0408','0409','0410','0501','0502','0503','0504','0505','0506','0507','0508','0509','0510','0511','0601','0602','0603','0604','0701','0702','0703','0704','0705','0706','0707','0708','0709','0710','0711','0712','0713','0714','0801','0802','0803','0804','0805','0806','0807','0808','0809','0810','0811','0812','0813','0814','0901','0902','0903','0904','0905','0906','0907','0908','0909','0910','1001','1002','1003','1004','1005','1006','1007','1008']
+	var sel_ids = [];
+	var css_countries = ["chn","usa","jpn","fra","nld","gbr","mex","ind","aus","bra","tur","rus"]
 	//Text Params
-	var t_Height = 80;
+	var t_Height = 130;
 	var t_rows = Math.ceil(height/t_Height) +1;
 	
 	var idx = 0;
+	
+	var refIcons =[];
 	var icons = [];
+	var allText = [];
+
 	var phrases = [];
 	var categories = {};
 	var fragments = {}
 	var dummy = svg.text(0,0,"A");
 	dummy.addClass("text");
+	var src = "";
+	var dst = "";
 
 	
 	function parseCSV(data){
+		if(categories.length > 0){
+			console.log("Categories already loaded");
+			return;
+		}
 		rows = data.replace(/\n/g,'#').split('#');
-
 		for (i in rows){
 			cols = rows[i].split(",");
 			categories[cols[0].toString()] = cols[1];
 		}
 	}
+
 	function shuffleArray(array) {
 	    for (var i = array.length - 1; i > 0; i--) {
 	        var j = Math.floor(Math.random() * (i + 1));
@@ -64,11 +76,30 @@ var patternMaker = function(cats){
 	function drawText(j,line){
 		ypos = Math.ceil(j*t_Height);
 		var text = svg.text(0, ypos, line);
+		// var rect = svg.rect(0, ypos+5, width,130);
+		// if(j %2){
+		// 	rect.attr({"fill":"blue"});	
+		// }
+		// else{
+		// 	rect.attr({"fill":"red"});		
+		// }
 		text.attr({
 				'x': 0,
 				'y' : ypos,
-				"class":"text"
 		});
+		text.addClass("font");
+		// if(src !== ""){
+			
+			
+		// }
+		if(css_countries.indexOf(src) == -1){
+			text.addClass("default-font")
+		}
+		else{
+			text.addClass(src+"-font")		
+		}
+		
+		allText.push(text);
 	}
 
 	function drawTextGrid(){
@@ -92,10 +123,9 @@ var patternMaker = function(cats){
 		var ypos = j*i_h;
 		icon.attr({
 			x: xpos,
-			y: ypos,
+			y: ypos+15,
 			width : "100px",
 			height: "100px",
-			class:"test"
 		});
 	}
 
@@ -123,13 +153,16 @@ var patternMaker = function(cats){
 	}
 
 	function addIcon(loadedFragment,index,g_idx){
+		if(Object.keys(fragments).indexOf(index) == -1){
+			console.log("MISSING FRAGMENT! "+ index);
+			return
+		}
     	svg.append(loadedFragment);
     	var elId = "#Layer_";
-    	// elId += index.replace(/0/g,"_");
     	elId += index;
-    	console.log(elId);
     	var el = svg.select(elId);
     	el.attr({"opacity":'0'});
+		refIcons.push(el);
     	if(el){
     		el_new = el.clone();	
 	    	elId += "_"+g_idx;
@@ -140,8 +173,6 @@ var patternMaker = function(cats){
 	    	}
     	}
     	else{
-    		
-    		// console.log(loadedFragment);
     	}
     	
     }
@@ -159,11 +190,11 @@ var patternMaker = function(cats){
 		}
     }
 	
-    function cb_full(loadedFragment){
-		fragments[ids[idx].toString()] = loadedFragment;	
-		if(idx < ids.length-1){
+    function cb_random(loadedFragment){
+		fragments[all_ids[idx].toString()] = loadedFragment;	
+		if(idx < all_ids.length-1){
 			idx = idx +1 ;
-			Snap.load(url+ids[idx],cb_full)	
+			Snap.load(url+all_ids[idx],cb_random)	
 		}
 		else{
 			populateIcons();
@@ -171,34 +202,85 @@ var patternMaker = function(cats){
 		}
     }
 
-	function cb(loadedFragment){
-		svg.append( loadedFragment );
-		var elId = "#Layer";
-		elId += ids[idx].replace(/0/g,"_");
-		var el = svg.select(elId);
-		icons.push(el);
-		if(idx < ids.length-1){
+    function cb_selection(loadedFragment){
+		fragments[sel_ids[idx].toString()] = loadedFragment;	
+		if(idx < sel_ids.length-1){
 			idx = idx +1 ;
-			Snap.load(url+ids[idx],cb)	
-
+			Snap.load(url+sel_ids[idx],cb_selection)	
 		}
 		else{
+			populateIcons();
 			drawIcons();
 		}
+    }
+
+	function clear(){
+		for (var i = 0; i < icons.length; i++) {
+			icons[i].remove();
+		};
+		for (var i = 0; i < allText.length; i++) {
+			allText[i].remove();
+		};
+		for (var i = 0; i < refIcons.length; i++) {
+			refIcons[i].remove();
+		};
+		icons = [];
+		allText = [];
+		refIcons = [];
+		fragments = {};
+		idx = 0;		
 	}
 
-	var generate = function(iconsToLoad){
-		parseCSV(cats);
-		ids = iconsToLoad || ids ;
-		for (var i = 0; i < ids.length; i++) {
-			phrases.push(categories[ids[i]]);
+	var generateFromList = function(iconsToLoad,srcCountry,dstCountry){
+		if(src === "default"){
+			console.log("HERE");
+			svg.removeClass("default");	
+		}
+
+		if(css_countries.indexOf(srcCountry) === -1){
+			console.log("THERE");
+			console.log(src);
+			svg.addClass("default");
+		}
+		else{
+			src = srcCountry;
+			svg.addClass(src);	
+		}
+		
+		// dst = dstCountry;
+		sel_ids = [];
+		for (var i = 0; i < iconsToLoad.length; i++) {
+			// console.log(ids.indexOf(iconsToLoad[i]))
+			if(all_ids.indexOf(iconsToLoad[i]) !== -1){
+				// console.log(iconsToLoad[i] + " exists");
+				sel_ids.push(iconsToLoad[i])
+			}
+		};
+		console.log("drawing : "+ sel_ids.length);
+		console.log("ignoring : "+ (all_ids.length - sel_ids.length));
+		// console.log(sel_ids);
+		phrases = []
+		for (var i = 0; i < sel_ids.length; i++) {
+			phrases.push(categories[sel_ids[i]]);
 		};
 		drawTextGrid();
-		Snap.load(url+ids[idx],cb_full);
+		Snap.load(url+sel_ids[idx],cb_selection);
+	}
 
+	var generate = function(){
+		parseCSV(cats);
+		for (var i = 0; i < all_ids.length; i++) {
+			phrases.push(categories[all_ids[i]]);
+		};
+		drawTextGrid();
+		svg.addClass("default");
+		src = "default";
+		Snap.load(url+all_ids[idx],cb_random);
 	}
 	return {
 		svg:svg,
-		generate:generate
+		generate:generate,
+		generateFromList:generateFromList,
+		clear:clear
 	};
 };

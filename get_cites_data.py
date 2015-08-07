@@ -3,7 +3,7 @@ import random
 import csv
 from urllib2 import Request,urlopen
 import xml.etree.ElementTree as ET
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from pprint import pprint
 import json
 
@@ -41,7 +41,7 @@ def get_cites_data(src,dst,start_time):
 	
 	request = Request(url)
 	response = urlopen(request).read()
-	data = BeautifulSoup(response)
+	data = BeautifulSoup(response,"html.parser")
 	
 	newDictionary=json.loads(str(data))
 	# print newDictionary

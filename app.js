@@ -36,11 +36,44 @@ app.get('/getsvg',function(req,res){
 	res.sendFile(__dirname+'/svg/'+svg_id+'.svg');
 })
 
+app.post('/gettradeicons',function(req,res){
+
+	console.log("Getting icon codes for...");
+	console.log(req.body);
+	console.log("Got response: " + res.statusCode);
+	console.log(req.params);
+
+	options = {}
+	options.scriptPath =  __dirname;
+	options.args =[]
+	options.args.push("icons");
+	options.args.push(req.body.src);
+	options.args.push(req.body.dst)
+	
+	PythonShell.run('make_recipe.py', options,function (err, results) {
+  		if (err){
+  			res.send("Bogus");
+  			// throw err;	
+  		} 
+  		else{
+  			res.send(results);	
+  		}
+  		
+  		// console.log(results)
+	});
+})
+
 app.get('/patternMaker.js',function(req,res){
 	var svg_id = req.body;
 	console.log(req.url);
 	svg_id = url.parse(req.url).query
 	res.sendFile(__dirname+'/patternMaker.js');
+})
+app.get('/countries.css',function(req,res){
+	var svg_id = req.body;
+	console.log(req.url);
+	svg_id = url.parse(req.url).query
+	res.sendFile(__dirname+'/css/countries.css');
 })
 
 app.post('/products', function (req, res) {

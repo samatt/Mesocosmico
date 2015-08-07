@@ -5,7 +5,8 @@ import random
 import requests
 import json
 import pprint
-from BeautifulSoup import BeautifulSoup
+# from bs4 import BeautifulSoup
+requests.packages.urllib3.disable_warnings()
 
 INPUTS_DIR=os.path.join(os.path.dirname(__file__),"inputs")
 PRODUCTS_FILE = "%s/%s"%(INPUTS_DIR,'hs_products.csv')
@@ -73,8 +74,8 @@ def getProductCategory(hs_id,cat_name):
 			return k
 
 if __name__ == '__main__':
-	
-	if len(sys.argv) <3 :
+	iconsMode = False
+	if len(sys.argv) <3 :	
 		print "Not enough arguments using random countries"
 		input_country_name =random.choice(input_country)
 		output_country_name =random.choice(input_country)
@@ -82,11 +83,20 @@ if __name__ == '__main__':
 		output_country_abbrv = country_lookup[output_country_name]		
 	else:
 		# print sys.argv[1],type(sys.argv[1])
-		input_country_abbrv = sys.argv[1].encode('ascii','ignore')
-		output_country_abbrv = sys.argv[2].encode('ascii','ignore')
+		if sys.argv[1] == "icons":
+			# print "HERE"
+			iconsMode = True
+			input_country_abbrv = sys.argv[2].encode('ascii','ignore')
+			output_country_abbrv = sys.argv[3].encode('ascii','ignore')
+			pass
+		else:
+			input_country_abbrv = sys.argv[1].encode('ascii','ignore')
+			output_country_abbrv = sys.argv[2].encode('ascii','ignore')
+
 	# print  sys.argv[1]
 	# if sys.argv[2]:
 	# print sys.argv[2]
+
 	
 	prod_id = random.choice(input_products_lookup.keys())
 	 # = random.choice()
@@ -102,6 +112,7 @@ if __name__ == '__main__':
 
 	other_products = []
 	results = {}
+	icons = set()
 	for item in items:
 		hs_id = item[u'hs_id']
 		hs_4_dig_id =  hs_id[-4:]
@@ -109,13 +120,20 @@ if __name__ == '__main__':
 			cat = getProductCategory(hs_id,hs_lookup[hs_id])
 			cat = cat.encode('ascii','ignore')
 			product  = hs_lookup[hs_id].encode('ascii','ignore')
-			if cat in results.keys():
-				results[cat]["products"].append(product.replace("\'",""))
+			if iconsMode is True:
+				# print hs_4_dig_id
+				icons.add(hs_4_dig_id)
 			else:
-				results[cat.replace("\'","")] ={}
-				results[cat.replace("\'","")]["products"] = [product.replace("\'","")]
-				results[cat.replace("\'","")]["hs_6_id"] = hs_id
-				results[cat.replace("\'","")]["hs_4_id"] = hs_4_dig_id
-				
-	# pprint.pprint(results)
-	print json.dumps(results)
+				if cat in results.keys():
+					results[cat]["products"].append(product.replace("\'",""))
+				else:
+					results[cat.replace("\'","")] ={}
+					results[cat.replace("\'","")]["products"] = [product.replace("\'","")]
+					results[cat.replace("\'","")]["hs_6_id"] = hs_id
+					results[cat.replace("\'","")]["hs_4_id"] = hs_4_dig_id
+	if icons:
+	# pprint.pprint(list(icons))
+		print json.dumps(list(icons))
+	else:
+		# pprint.pprint(results)
+		print json.dumps(results)
