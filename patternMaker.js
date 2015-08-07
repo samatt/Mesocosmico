@@ -5,8 +5,8 @@ var patternMaker = function(cats,svgElId){
 		"icon_viewbox" : "0 0 128 128",
 		"class":"canvas"
 	}
-	var url = "http://45.55.165.85:3000/getsvg?"
-	// var url = "http://localhost:3000/getsvg?"
+	var url = "http://45.55.165.85:3000/getsvg?";
+	// var url = "http://localhost:3000/getsvg?";
 	var svg = Snap(svgElId);	
 	// svg.addClass("canvas");
 	
@@ -38,7 +38,7 @@ var patternMaker = function(cats,svgElId){
 	var fragments = {}
 	var dummy = svg.text(0,0,"A");
 	dummy.addClass("text");
-	var src = "";
+	var src = "default";
 	var dst = "";
 
 	
@@ -233,16 +233,14 @@ var patternMaker = function(cats,svgElId){
 
 	var generateFromList = function(iconsToLoad,srcCountry,dstCountry){
 		if(src === "default"){
-			console.log("HERE");
 			svg.removeClass("default");	
 		}
 
 		if(css_countries.indexOf(srcCountry) === -1){
-			console.log("THERE");
-			console.log(src);
 			svg.addClass("default");
 		}
 		else{
+			svg.removeClass(src);	
 			src = srcCountry;
 			svg.addClass(src);	
 		}
@@ -273,8 +271,8 @@ var patternMaker = function(cats,svgElId){
 			phrases.push(categories[all_ids[i]]);
 		};
 		drawTextGrid();
-		svg.addClass("default");
-		src = "default";
+		svg.addClass(src);
+		// src = "default";
 		Snap.load(url+all_ids[idx],cb_random);
 	}
 	return {
