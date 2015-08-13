@@ -70,10 +70,15 @@ app.get('/patternMaker.js',function(req,res){
 	res.sendFile(__dirname+'/patternMaker.js');
 })
 app.get('/countries.css',function(req,res){
-	var svg_id = req.body;
-	console.log(req.url);
-	svg_id = url.parse(req.url).query
 	res.sendFile(__dirname+'/css/countries.css');
+})
+
+app.get('/main.css',function(req,res){
+	res.sendFile(__dirname+'/css/main.css');
+})
+
+app.get('/containerDecoration.png',function(req,res){
+	res.sendFile(__dirname+'/imgs/containerDecoration.png');
 })
 
 app.post('/products', function (req, res) {
