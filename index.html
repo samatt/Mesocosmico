@@ -2,9 +2,13 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Mesocosmico Recipe Maker</title>
+	<title>More&More Recipe Maker</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link href='http://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
 	<script>
 		categories = {}
 		var s; 
@@ -315,10 +319,17 @@
 	
 	<form class="pure-form pure-form-stacked">
 		<fieldset>
-		 	<legend>Mesocosmico Recipe Maker</legend>
+			<div id = "Content">
+		 	<legend><div id = "title"><img height = "300px" src = "imgs/containerDecoration.png">MORE & MORE RECIPE MAKER</div></legend>
+		 	<div id = "subtitle">
+
+
+The More&More Recipe Maker is a tool that portrays the relationship between two countries as defined by their exchanged imports and exports. It includes data for countries that are home to some of the world's busiest ports, utilizing the <a href = "http://hts.usitc.gov/">harmonized system code</a> for product categorization.<br><br><br>
+			</div>
+			<center>
 			<div class="pure-g">
 			 	<div class="pure-u-1 pure-u-md-1-2">
-	            	<label for="source">Source Country</label>
+	            	<label for="source">EXPORT COUNTRY</label>
 	            	<select id="source">
 						<option value="chn">China</option>
 						<option value="jpn">Japan</option>
@@ -340,9 +351,9 @@
 						<option value="usa">United States</option>
 					</select>
 	        	</div>
-
+	        	<br>
 	        	<div class="pure-u-1 pure-u-md-1-2">
-	            	<label for="destination">Destination Country</label>
+	            	<label for="destination">IMPORT COUNTRY</label>
 	            	<select id="destination" >
 						<option value="chn">China</option>
 						<option value="jpn">Japan</option>
@@ -365,10 +376,13 @@
 					</select>
 	        	</div>
 	        </div>
-	        	<button type="button" onclick="findProducts()" class="pure-button pure-button-primary pure-u-3-1">Get Product Categories</button>
-	        	<button type="button" onclick="findSpecies()" class="pure-button pure-button-primary pure-u-3-2">Get Species Categories</button>
-	        	<button type="button" onclick="findArms()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>
-	        	<button type="button" onclick="drawPattern()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>
+	        	        	<br>
+
+	        	<button type="button" onclick="findProducts()" class="mybutton">PRODUCT CATEGORIES</button>
+	        	<button type="button" onclick="findSpecies()" class="mybutton">SPECIES CATEGORIES</button>
+	        	<button type="button" onclick="findArms()" class="mybutton">ARMS CATEGORIES</button>
+	        	<button type="button" onclick="drawPattern()" class="mybutton">ARMS CATEGORIES</button>
+	        </center>
 
 	        	<div class="pure-u-1 pure-u-md-1-2 products">
 	        	    <label for="categories">Product Categories</label>
