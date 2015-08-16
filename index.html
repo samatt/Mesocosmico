@@ -29,8 +29,8 @@
 		function getRandItem(currentCategory){
 
 			if(Object.keys(categories).length > 0){
-				var randIndex = getRandomInt(0,categories[currentCategory].length);
-				return categories[currentCategory][randIndex];
+				var randIndex = getRandomInt(0,categories[currentCategory]["products"].length);
+				return categories[currentCategory]["products"][randIndex];
 			}
 		}
 
