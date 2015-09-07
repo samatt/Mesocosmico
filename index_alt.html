@@ -7,8 +7,8 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-	<!-- <link rel="stylesheet" href="http://localhost:3000/countries.css"> -->
-	<link rel="stylesheet" href="http://45.55.165.85:3000/countries.css">
+	<link rel="stylesheet" href="http://localhost:3000/countries.css">
+	<!-- <link rel="stylesheet" href="http://45.55.165.85:3000/countries.css"> -->
 	<style>
 /*		@import url(http://fonts.googleapis.com/css?family=Hind:400,700);
 		#svg{
@@ -30,8 +30,8 @@
 		}*/
 	</style>
 	
-	<script src="http://45.55.165.85:3000/patternMaker.js"></script>
-	 <!-- // <script src="http://localhost:3000/patternMaker.js"></script> -->
+	<!-- // <script src="http://45.55.165.85:3000/patternMaker.js"></script> -->
+	<script src="http://localhost:3000/patternMaker.js"></script>
 	<script>
 		var params = {
 			"icon_viewbox" : "0 0 128 128",
@@ -64,7 +64,7 @@
 				})
 				.done(function(data) {
 					$('#names').empty()
-					$('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
+					// $('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
 					p1 = patternMaker(data,'#svgother');
 					p1.generate();
 					
@@ -117,12 +117,14 @@
 
 
 <body>
-<p style="text-align:center;"> Countries: CHN , USA, JPN, FRA, ARE, NLD, GBR, MEX, IND, AUS, BRA, TUR, RUS</p>
+<p style="text-align:center;">
+The More&More textile maker exemplifies the kind of output that we are generating using the More&More dataset. These textiles represent the import and export relationships of two selected countries (list links here for a few different country relationships). The text in the background is from the harmonized system code of categorization for the products exchanged, and in the foreground are iconic representations of some of those products. The background gradients are extrapolated from the colors of flags of their countries of origin. These textiles will eventually be used to make swimsuits, as a nod to the important role of the sea in global shipping. 
+ </p>
 <p id="names" style="text-align:center;"></p>
 <svg id="svg">
 </svg>
 <svg id="svgother"> </svg>
 <!-- <button type="button" onclick="loadSvg()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>	 -->
-	
+	<!-- Countries: CHN , USA, JPN, FRA, ARE, NLD, GBR, MEX, IND, AUS, BRA, TUR, RUS  -->
 </body>
 </html>
