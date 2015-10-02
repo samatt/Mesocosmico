@@ -1,0 +1,64 @@
+body {
+	background-color: black;
+	color:white;
+}
+
+#title{
+	font-family: 'Droid Sans', sans-serif;
+	font-weight: bold;
+	color: #E7E7E7;
+	margin:auto;
+	font-size: 56px;
+	text-align: center;
+	width: 60%;
+	   -webkit-text-stroke-width: 1px;
+	   -webkit-text-stroke-color: black;
+
+
+}
+
+#subtitle{
+	width: 60%;
+	margin: auto;
+	font-family: 'Droid Sans', sans-serif;
+	color: gray;
+	text-align: justify;
+
+}
+
+
+#Content{
+	background-color: #E7E7E7;
+	color: black;
+	margin: auto;
+    width: 80%;
+    height: auto;
+    padding: 10px;
+   	font-family: 'Hind', sans-serif;
+}
+
+.mybutton{
+	background-color: white;
+	color: gray;
+}
+
+/* unvisited link */
+a:link {
+    color: #324B4B;
+}
+
+/* visited link */
+a:visited {
+    color: #009999;
+}
+
+/* mouse over link */
+a:hover {
+    color: #19A3A3;
+}
+
+img {
+    float: right;
+    z-index: -1px;
+}
+
