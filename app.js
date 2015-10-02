@@ -9,7 +9,7 @@ app.use(cors());
 
 app.use(bodyParser.json());
 // app.use(express.json()); 
-// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname+'/index.html');
@@ -20,13 +20,25 @@ app.get('/texture', function (req, res) {
 });
 
 
-app.get('/getcategoriescsv', function (req, res) {
-  res.sendFile(__dirname+'/inputs/hs_classification_list.csv');
-});
+// app.get('/getcategoriescsv', function (req, res) {
+//   res.sendFile(__dirname+'/inputs/hs_classification_list.csv');
+// });
+// app.get('/countries.css',function(req,res){
+// 	res.sendFile(__dirname+'/css/countries.css');
+// })
 
-app.get('/categories', function (req, res) {
-  res.sendFile(__dirname+'/inputs/hs_categories.json');
-});
+// app.get('/main.css',function(req,res){
+// 	res.sendFile(__dirname+'/css/main.css');
+// })
+
+// app.get('/containerDecoration.png',function(req,res){
+// 	res.sendFile(__dirname+'/imgs/containerDecoration.png');
+// })
+
+
+// app.get('/categories', function (req, res) {
+//   res.sendFile(__dirname+'/inputs/hs_categories.json');
+// });
 
 app.get('/getsvg',function(req,res){
 	var svg_id = req.body;
@@ -63,22 +75,15 @@ app.post('/gettradeicons',function(req,res){
 	});
 })
 
+// app.getIDs('/ids',function(){
+
+// })
+
 app.get('/patternMaker.js',function(req,res){
 	var svg_id = req.body;
 	console.log(req.url);
 	svg_id = url.parse(req.url).query
 	res.sendFile(__dirname+'/patternMaker.js');
-})
-app.get('/countries.css',function(req,res){
-	res.sendFile(__dirname+'/css/countries.css');
-})
-
-app.get('/main.css',function(req,res){
-	res.sendFile(__dirname+'/css/main.css');
-})
-
-app.get('/containerDecoration.png',function(req,res){
-	res.sendFile(__dirname+'/imgs/containerDecoration.png');
 })
 
 app.post('/products', function (req, res) {

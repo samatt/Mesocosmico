@@ -7,8 +7,8 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-	<!-- <link rel="stylesheet" href="http://localhost:3000/countries.css"> -->
-	<link rel="stylesheet" href="http://45.55.165.85:3000/countries.css">
+	<link rel="stylesheet" href="http://localhost:3000/countries.css">
+	<!-- <link rel="stylesheet" href="http://45.55.165.85:3000/countries.css"> -->
 	<style>
 /*		@import url(http://fonts.googleapis.com/css?family=Hind:400,700);
 		#svg{
@@ -30,8 +30,8 @@
 		}*/
 	</style>
 	
-	<script src="http://45.55.165.85:3000/patternMaker.js"></script>
-	<!-- // <script src="http://localhost:3000/patternMaker.js"></script> -->
+	<!-- // <script src="http://45.55.165.85:3000/patternMaker.js"></script> -->
+	<script src="patternMaker.js"></script>
 	<script>
 		var params = {
 			"icon_viewbox" : "0 0 128 128",
@@ -43,7 +43,9 @@
 		var text;
 		var defaultViewBox ="0 0 128 128";
 		var wid
-		categories = {}
+		categories = {};
+		var icons_data;
+
 		var icons = {};
 		var p,p1;
 		var s,scope; 
@@ -60,18 +62,29 @@
 
 			 var request = $.ajax({
 				type: "GET",
-				url: "/getcategoriescsv",
+				url: "/icons.csv",
 				})
 				.done(function(data) {
-					$('#names').empty()
-					// $('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
-					p1 = patternMaker(data,'#svgother');
-					p1.generate();
-					
-					p= patternMaker(data,'#svg');
-					p.generate();
-				})
-		});
+
+					icons = data;
+					$.ajax({
+						type: "GET",
+						url: "/hs_classification_list.csv",
+						})
+						.done(function(data) {
+							$('#names').empty()
+							// $('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
+							p1 = patternMaker(data,'#svgother',icons);
+							p1.generate();
+
+							p= patternMaker(data,'#svg',icons);
+							p.generate();
+						})
+					});
+				// })
+			});
+
+
 
 		$(window).bind( 'hashchange', function(e) { 
 	    	var anchor = document.location.hash;
