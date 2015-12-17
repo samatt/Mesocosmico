@@ -1,4 +1,4 @@
-var express = require('express');
+	var express = require('express');
 var cors = require('cors');
 var PythonShell = require('python-shell');
 var fs = require('fs');
@@ -14,12 +14,25 @@ app.use(express.static(__dirname + '/public'));
 
 var categories = loadHSCategories();
 var iconsPaths = loadIconPaths();
-console.log(iconsPaths)
+var tagged = loadTaggedIcons();
+// console.log(tagged)
 
 
 app.get('/icons',function(req,res){
 	res.send(iconsPaths);
 });
+
+app.post('/country',function(req,res){
+
+	console.log("Getting icon codes for...");
+	// console.log(req.body);
+	console.log("Got response: " + res.statusCode);
+	// console.log(req.params);
+	
+	console.log(tagged[req.body.country])
+	res.send(tagged[req.body.country]);
+
+})
 
 app.post('/gettradeicons',function(req,res){
 
@@ -52,7 +65,7 @@ function loadHSCategories(){
 	buf = fs.readFileSync(__dirname+"/public/hs_classification_list.csv", "utf8");
 	
 	rows = buf.replace(/\r/g,'').replace(/\n/g,'#').split('#');
-	console.log(rows);
+	// console.log(rows);
 	for (i in rows){
 		cols = rows[i].split(",");
 		cats[cols[0].toString()] = cols[1];
@@ -60,6 +73,33 @@ function loadHSCategories(){
 	return cats;
 }
 
+function loadTaggedIcons(){
+	var icons = {};
+	var iconRootPath = __dirname+'/public/tagged_icons.csv';
+	var data = fs.readFileSync(iconRootPath, 'utf8');
+
+	var rows = data.split("\r\n");
+	var tagged = {}
+	for (var i = 0; i < rows.length; i++) {
+		var cols = rows[i].split(",");
+		// console.log(cols);
+		var country = cols.splice(0,1)[0];
+		tagged[country] = [];
+		for (var j = 0; j < cols.length; j++) {
+
+			if(typeof iconsPaths[cols[j]+".svg"] == "undefined"){
+				console.log(cols[j]);
+			}
+			else{
+				if(cols[j] =="2710"){
+					// console.log("here")
+				}
+				tagged[country].push(cols[j]);
+			}
+		};
+	};
+	return tagged
+}
 function loadIconPaths(){
 	var icons = {};
 	var iconRootPath = __dirname+'/public/svg';
@@ -81,7 +121,7 @@ function loadIconPaths(){
 
 				var code = files[j].replace(".svg","");
 				icons[files[j]].text = categories[code];
-				console.log(categories[code]);
+				// console.log(categories[code]);
 			}
 			else{
 				icons[files[j]].text = files[j].replace(".svg", "").replace(/[0-9]/g, "");

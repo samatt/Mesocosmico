@@ -3,7 +3,7 @@ import os
 import random
 import requests
 import json
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 INPUTS_DIR=os.path.join(os.path.dirname(__file__),"inputs")
 PRODUCTS_FILE = "%s/%s"%(INPUTS_DIR,'hs_products.csv')
@@ -44,9 +44,10 @@ for row in input_products_reader:
 	products_lookup[key] = value	
 
 #load HS data
-hs_req = "https://atlas.media.mit.edu/attr/hs/"
+hs_req = "https://atlas.media.mit.edu/attr/hs07"
 hs_lookup = {}
 hs_r = requests.get(hs_req, verify=False)
+print hs_r
 data = json.loads(hs_r.text)
 items =  data[u'data']
 for item in items:
@@ -67,7 +68,7 @@ if __name__ == '__main__':
 	print input_country_abbrv,output_country_abbrv
 
 
-	req = "http://atlas.media.mit.edu/hs/export/2010/%s/%s/show"	%(input_country_abbrv,output_country_abbrv)
+	req = "http://atlas.media.mit.edu/hs/export/2014/%s/%s/show"	%(input_country_abbrv,output_country_abbrv)
 	# print req
 	r = requests.get(req, verify=False)
 	data = json.loads(r.text)

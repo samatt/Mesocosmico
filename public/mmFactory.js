@@ -125,8 +125,9 @@ var mmFactory = function(i,svgEl){
 		// });
 	}
 	function loadIcon(fragment){
+
 		var id = fragment.select('svg').node.id.replace("Layer_","") +".svg";
-		// console.log(this.icons[id]);
+		// console.log(id);
 		icons[id].fragment = fragment;
 		// this.icons_draw.push(id);
 		// console.log(this.icons[id]);
@@ -134,6 +135,7 @@ var mmFactory = function(i,svgEl){
 		if(loadIdx < icons_load.length-1){
 			loadIdx = loadIdx +1 ;
 			Snap.load(icons[icons_load[loadIdx]].url,loadIcon)	
+			// console.log(icons_load[loadIdx]);
 		}
 		else{
 			console.log("loaded");
@@ -211,7 +213,7 @@ var mmFactory = function(i,svgEl){
     	var elId = "#Layer_";
     	elId += short_id;
     	var el = svg.select(elId);
-    	// console.log(el);
+    	console.log(el);
     	el.attr({"opacity":'0'});
 		// refIcons.push(el);
     	if(el){
@@ -225,8 +227,7 @@ var mmFactory = function(i,svgEl){
     	}
     	else{
     		// console.log("didnt find",el);
-    	}
-    	
+    	}	
     }
 
 	var populateIcons =function(){
@@ -259,6 +260,20 @@ var mmFactory = function(i,svgEl){
 			setTimeout(this.pollIcons,1000)
 		}
 	}
+	
+	var LoadTaggedData = function(iconCodes){
+		icons_load = [];
+		loadIdx = 0;
+		for (var i = 0; i < iconCodes.length; i++) {
+			var icon_id = iconCodes[i]+".svg";
+			if(Object.keys(icons[icon_id]).indexOf('fragment') < 0){
+				console.log(icons[icon_id].text,"not loaded")	
+				icons_load.push(icon_id);
+			}
+		}
+		var icon = icons[icons_load[loadIdx]]
+		Snap.load(icon.url,loadIcon);
+	};
 
 	var LoadHSData = function(hsCodes,_src,dst){
 		icons_load = [];
@@ -267,13 +282,13 @@ var mmFactory = function(i,svgEl){
 		for (var i = 0; i < hsCodes.length; i++) {
 			var icon_id = hsCodes[i]+".svg";
 			if(Object.keys(icons[icon_id]).indexOf('fragment') < 0){
-				console.log(icons[icon_id].text,"not loaded")	
+				// console.log(icons[icon_id].text,"not loaded")	
 				icons_load.push(icon_id);
 			}
 		};
 		// drawTextGrid();
 
-		// console.log(icons_load[loadIdx])
+		// console.log(icons[icons_load[loadIdx]])
 		var icon = icons[icons_load[loadIdx]]
 		Snap.load(icon.url,loadIcon);
 	}

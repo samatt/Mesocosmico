@@ -4,6 +4,7 @@ import os
 import random
 import requests
 import json
+import simplejson
 import pprint
 # from bs4 import BeautifulSoup
 requests.packages.urllib3.disable_warnings()
@@ -60,9 +61,11 @@ for row in input_products_reader:
 	products_lookup[key] = value	
 
 #load HS data
-hs_req = "https://atlas.media.mit.edu/attr/hs/"
+hs_req = "https://atlas.media.mit.edu/attr/hs07"
+
 hs_lookup = {}
-hs_r = requests.get(hs_req, verify=False)
+hs_r = requests.get(hs_req, verify=True)
+
 data = json.loads(hs_r.text)
 items =  data[u'data']
 for item in items:
@@ -80,39 +83,41 @@ def getProductCategory(hs_id,cat_name):
 			return k
 
 if __name__ == '__main__':
-	iconsMode = False
-	if len(sys.argv) <3 :	
-		print "Not enough arguments using random countries"
-		input_country_name =random.choice(input_country)
-		output_country_name =random.choice(input_country)
-		input_country_abbrv = country_lookup[input_country_name]
-		output_country_abbrv = country_lookup[output_country_name]		
-	else:
-		# print sys.argv[1],type(sys.argv[1])
-		if sys.argv[1] == "icons":
-			# print "HERE"
-			iconsMode = True
-			input_country_abbrv = sys.argv[2].encode('ascii','ignore')
-			output_country_abbrv = sys.argv[3].encode('ascii','ignore')
-			pass
-		else:
-			input_country_abbrv = sys.argv[1].encode('ascii','ignore')
-			output_country_abbrv = sys.argv[2].encode('ascii','ignore')
+	iconsMode = True
+	# if len(sys.argv) <3 :	
+	# 	print "Not enough arguments using random countries"
+	# 	input_country_name =random.choice(input_country)
+	# 	output_country_name =random.choice(input_country)
+	# 	input_country_abbrv = country_lookup[input_country_name]
+	# 	output_country_abbrv = country_lookup[output_country_name]		
+	# else:
+	# 	# print sys.argv[1],type(sys.argv[1])
+	# 	if sys.argv[1] == "icons":
+	# 		# print "HERE"
+	# 		iconsMode = True
+	# 		input_country_abbrv = sys.argv[2].encode('ascii','ignore')
+			# output_country_abbrv = sys.argv[3].encode('ascii','ignore')
+	# 		pass
+	# 	else:
+	input_country_abbrv = sys.argv[1].encode('ascii','ignore')
+	# 		output_country_abbrv = sys.argv[2].encode('ascii','ignore')
 
 	# print  sys.argv[1]
 	# if sys.argv[2]:
 	# print sys.argv[2]
 
 	
-	prod_id = random.choice(input_products_lookup.keys())
+	# prod_id = random.choice(input_products_lookup.keys())
 	 # = random.choice()
 
 	# print input_country_abbrv,output_country_abbrv
 	# req = "http://atlas.media.mit.edu/hs/export/all/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
-	req = "http://atlas.media.mit.edu/hs/export/2010/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
-	# print req
+	# req = "http://atlas.media.mit.edu/hs07/export/2010/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
 
+	req = "http://atlas.media.mit.edu/hs07/export/2010/%s/all/show"%(input_country_abbrv)
+	
 	r = requests.get(req, verify=False)
+	# print r.text
 	data = json.loads(r.text)
 	items =  data[u'data']
 
@@ -120,27 +125,28 @@ if __name__ == '__main__':
 	results = {}
 	icons = set()
 	for item in items:
-		hs_id = item[u'hs_id']
-		hs_4_dig_id =  hs_id[-4:]
-		if hs_id in hs_lookup.keys():
-			cat = getProductCategory(hs_id,hs_lookup[hs_id])
-			cat = cat.encode('ascii','ignore')
-			product  = hs_lookup[hs_id].encode('ascii','ignore')
-			if iconsMode is True:
-				# print hs_4_dig_id
-				if hs_4_dig_id in codes_with_icons:
-					icons.add(hs_4_dig_id)
-			else:
-				if cat in results.keys():
-					results[cat]["products"].append(product.replace("\'",""))
+		if item[u'hs07_id_len'] == 6:
+			hs_id = item[u'hs07_id']
+			hs_4_dig_id =  hs_id[-4:]
+			if hs_id in hs_lookup.keys():
+				cat = getProductCategory(hs_id,hs_lookup[hs_id])
+				cat = cat.encode('ascii','ignore')
+				product  = hs_lookup[hs_id].encode('ascii','ignore')
+				if iconsMode is True:
+					# print hs_4_dig_id
+					if hs_4_dig_id in codes_with_icons:
+						icons.add(hs_4_dig_id)
 				else:
-					results[cat.replace("\'","")] ={}
-					results[cat.replace("\'","")]["products"] = [product.replace("\'","")]
-					results[cat.replace("\'","")]["hs_6_id"] = hs_id
-					results[cat.replace("\'","")]["hs_4_id"] = hs_4_dig_id
+					if cat in results.keys():
+						results[cat]["products"].append(product.replace("\'",""))
+					else:
+						results[cat.replace("\'","")] ={}
+						results[cat.replace("\'","")]["products"] = [product.replace("\'","")]
+						results[cat.replace("\'","")]["hs_6_id"] = hs_id
+						results[cat.replace("\'","")]["hs_4_id"] = hs_4_dig_id
 	if icons:
 	# pprint.pprint(list(icons))
 		print json.dumps(list(icons))
 	else:
-		# pprint.pprint(results)
-		print json.dumps(results)
+		pprint.pprint(results)
+		# print json.dumps(results)
