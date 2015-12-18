@@ -83,24 +83,24 @@ def getProductCategory(hs_id,cat_name):
 			return k
 
 if __name__ == '__main__':
-	iconsMode = True
-	# if len(sys.argv) <3 :	
-	# 	print "Not enough arguments using random countries"
-	# 	input_country_name =random.choice(input_country)
-	# 	output_country_name =random.choice(input_country)
-	# 	input_country_abbrv = country_lookup[input_country_name]
-	# 	output_country_abbrv = country_lookup[output_country_name]		
-	# else:
-	# 	# print sys.argv[1],type(sys.argv[1])
-	# 	if sys.argv[1] == "icons":
-	# 		# print "HERE"
-	# 		iconsMode = True
-	# 		input_country_abbrv = sys.argv[2].encode('ascii','ignore')
-			# output_country_abbrv = sys.argv[3].encode('ascii','ignore')
-	# 		pass
-	# 	else:
-	input_country_abbrv = sys.argv[1].encode('ascii','ignore')
-	# 		output_country_abbrv = sys.argv[2].encode('ascii','ignore')
+	iconsMode = False
+	if len(sys.argv) <3 :	
+		print "Not enough arguments using random countries"
+		input_country_name =random.choice(input_country)
+		output_country_name =random.choice(input_country)
+		input_country_abbrv = country_lookup[input_country_name]
+		output_country_abbrv = country_lookup[output_country_name]		
+	else:
+		# print sys.argv[1],type(sys.argv[1])
+		if sys.argv[1] == "icons":
+			# print "HERE"
+			iconsMode = True
+			input_country_abbrv = sys.argv[2].encode('ascii','ignore')
+			output_country_abbrv = sys.argv[3].encode('ascii','ignore')
+			pass
+		else:
+			input_country_abbrv = sys.argv[1].encode('ascii','ignore')
+			output_country_abbrv = sys.argv[2].encode('ascii','ignore')
 
 	# print  sys.argv[1]
 	# if sys.argv[2]:
@@ -112,12 +112,12 @@ if __name__ == '__main__':
 
 	# print input_country_abbrv,output_country_abbrv
 	# req = "http://atlas.media.mit.edu/hs/export/all/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
-	# req = "http://atlas.media.mit.edu/hs07/export/2010/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
+	# print req
+	req = "http://atlas.media.mit.edu/hs07/export/2010/%s/%s/all"%(input_country_abbrv,output_country_abbrv)
 
-	req = "http://atlas.media.mit.edu/hs07/export/2010/%s/all/show"%(input_country_abbrv)
+	# req = "http://atlas.media.mit.edu/hs07/export/2010/%s/all/show"%(input_country_abbrv)
 	
 	r = requests.get(req, verify=False)
-	# print r.text
 	data = json.loads(r.text)
 	items =  data[u'data']
 
@@ -149,4 +149,4 @@ if __name__ == '__main__':
 		print json.dumps(list(icons))
 	else:
 		pprint.pprint(results)
-		# print json.dumps(results)
+		print json.dumps(results)
