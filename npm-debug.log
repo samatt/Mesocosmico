@@ -1,0 +1,372 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'cors' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 warn package.json MesocosmicoRecipeMaker@1.0.0 No description
+5 warn package.json MesocosmicoRecipeMaker@1.0.0 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'cors', null ]
+8 verbose cache add name=undefined spec="cors" args=["cors",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'cors',
+9 verbose parsed url   path: 'cors',
+9 verbose parsed url   href: 'cors' }
+10 silly lockFile 3b1b74c9-cors cors
+11 verbose lock cors /Users/surya/.npm/3b1b74c9-cors.lock
+12 silly lockFile 3b1b74c9-cors cors
+13 silly lockFile 3b1b74c9-cors cors
+14 verbose addNamed [ 'cors', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile 9fcb5857-cors cors@
+17 verbose lock cors@ /Users/surya/.npm/9fcb5857-cors.lock
+18 silly addNameRange { name: 'cors', range: '*', hasData: false }
+19 verbose request where is /cors
+20 verbose request registry https://registry.npmjs.org/
+21 verbose request id 619ea9c1c321f873
+22 verbose url raw /cors
+23 verbose url resolving [ 'https://registry.npmjs.org/', './cors' ]
+24 verbose url resolved https://registry.npmjs.org/cors
+25 verbose request where is https://registry.npmjs.org/cors
+26 info trying registry request attempt 1 at 23:03:27
+27 http GET https://registry.npmjs.org/cors
+28 http 200 https://registry.npmjs.org/cors
+29 silly registry.get cb [ 200,
+29 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 silly registry.get     etag: '"3CPP0JCPACPIOS3SB9OD2TAF9"',
+29 silly registry.get     'content-type': 'application/json',
+29 silly registry.get     'cache-control': 'max-age=60',
+29 silly registry.get     'content-length': '46170',
+29 silly registry.get     'accept-ranges': 'bytes',
+29 silly registry.get     date: 'Wed, 22 Jul 2015 03:03:27 GMT',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     age: '36',
+29 silly registry.get     connection: 'keep-alive',
+29 silly registry.get     'x-served-by': 'cache-iad2128-IAD',
+29 silly registry.get     'x-cache': 'HIT',
+29 silly registry.get     'x-cache-hits': '1',
+29 silly registry.get     'x-timer': 'S1437534207.374563,VS0,VE0',
+29 silly registry.get     vary: 'Accept' } ]
+30 silly addNameRange number 2 { name: 'cors', range: '*', hasData: true }
+31 silly addNameRange versions [ 'cors',
+31 silly addNameRange   [ '0.0.1',
+31 silly addNameRange     '0.0.2',
+31 silly addNameRange     '0.0.3',
+31 silly addNameRange     '0.0.4',
+31 silly addNameRange     '0.0.5',
+31 silly addNameRange     '0.1.0',
+31 silly addNameRange     '0.1.1',
+31 silly addNameRange     '1.0.0',
+31 silly addNameRange     '1.0.1',
+31 silly addNameRange     '2.0.0',
+31 silly addNameRange     '2.1.0',
+31 silly addNameRange     '2.1.1',
+31 silly addNameRange     '2.2.0',
+31 silly addNameRange     '2.3.0',
+31 silly addNameRange     '2.3.1',
+31 silly addNameRange     '2.3.2',
+31 silly addNameRange     '2.4.0',
+31 silly addNameRange     '2.4.1',
+31 silly addNameRange     '2.4.2',
+31 silly addNameRange     '2.5.0',
+31 silly addNameRange     '2.5.1',
+31 silly addNameRange     '2.5.2',
+31 silly addNameRange     '2.5.3',
+31 silly addNameRange     '2.6.0',
+31 silly addNameRange     '2.6.1',
+31 silly addNameRange     '2.7.0',
+31 silly addNameRange     '2.7.1' ] ]
+32 verbose addNamed [ 'cors', '2.7.1' ]
+33 verbose addNamed [ '2.7.1', '2.7.1' ]
+34 silly lockFile 221e52c6-cors-2-7-1 cors@2.7.1
+35 verbose lock cors@2.7.1 /Users/surya/.npm/221e52c6-cors-2-7-1.lock
+36 silly lockFile 2618af42-ry-npmjs-org-cors-cors-2-7-1-tgz https://registry.npmjs.org/cors/-/cors-2.7.1.tgz
+37 verbose lock https://registry.npmjs.org/cors/-/cors-2.7.1.tgz /Users/surya/.npm/2618af42-ry-npmjs-org-cors-cors-2-7-1-tgz.lock
+38 verbose addRemoteTarball [ 'https://registry.npmjs.org/cors/-/cors-2.7.1.tgz',
+38 verbose addRemoteTarball   '3c2e50a58af9ef8c89bee21226b099be1f02739b' ]
+39 info retry fetch attempt 1 at 23:03:27
+40 verbose fetch to= /var/folders/mq/rdsnl8fx289dnsc1xqpx3w7w0000gn/T/npm-22515-K19WR67w/registry.npmjs.org/cors/-/cors-2.7.1.tgz
+41 http GET https://registry.npmjs.org/cors/-/cors-2.7.1.tgz
+42 http 200 https://registry.npmjs.org/cors/-/cors-2.7.1.tgz
+43 silly lockFile 2618af42-ry-npmjs-org-cors-cors-2-7-1-tgz https://registry.npmjs.org/cors/-/cors-2.7.1.tgz
+44 silly lockFile 2618af42-ry-npmjs-org-cors-cors-2-7-1-tgz https://registry.npmjs.org/cors/-/cors-2.7.1.tgz
+45 silly lockFile 221e52c6-cors-2-7-1 cors@2.7.1
+46 silly lockFile 221e52c6-cors-2-7-1 cors@2.7.1
+47 silly lockFile 9fcb5857-cors cors@
+48 silly lockFile 9fcb5857-cors cors@
+49 silly resolved [ { name: 'cors',
+49 silly resolved     version: '2.7.1',
+49 silly resolved     author:
+49 silly resolved      { name: 'Troy Goode',
+49 silly resolved        email: 'troygoode@gmail.com',
+49 silly resolved        url: 'https://github.com/troygoode/' },
+49 silly resolved     description: 'middleware for dynamically or statically enabling CORS in express/connect applications',
+49 silly resolved     keywords: [ 'cors', 'express', 'connect', 'middleware' ],
+49 silly resolved     homepage: 'https://github.com/expressjs/cors/',
+49 silly resolved     repository: { type: 'git', url: 'git://github.com/expressjs/cors.git' },
+49 silly resolved     contributors: [ [Object] ],
+49 silly resolved     license: 'MIT',
+49 silly resolved     bugs: { url: 'https://github.com/expressjs/cors/issues' },
+49 silly resolved     main: './lib/index.js',
+49 silly resolved     engines: { node: '>=0.10.0' },
+49 silly resolved     dependencies: { vary: '^1' },
+49 silly resolved     devDependencies:
+49 silly resolved      { 'basic-auth-connect': '^1.0.0',
+49 silly resolved        'body-parser': '^1.12.4',
+49 silly resolved        eslint: '^0.21.2',
+49 silly resolved        express: '^4.12.4',
+49 silly resolved        mocha: '^2.2.5',
+49 silly resolved        should: '^6.0.3',
+49 silly resolved        supertest: '^1.0.1' },
+49 silly resolved     scripts:
+49 silly resolved      { test: 'npm run lint && ./node_modules/mocha/bin/mocha',
+49 silly resolved        lint: './node_modules/eslint/bin/eslint.js lib test' },
+49 silly resolved     gitHead: 'bef1a97c22a3f15cb23ab2d9cf8e7e3f7134e107',
+49 silly resolved     _id: 'cors@2.7.1',
+49 silly resolved     _shasum: '3c2e50a58af9ef8c89bee21226b099be1f02739b',
+49 silly resolved     _from: 'cors@',
+49 silly resolved     _npmVersion: '2.5.1',
+49 silly resolved     _nodeVersion: '0.12.0',
+49 silly resolved     _npmUser: { name: 'troygoode', email: 'troygoode@gmail.com' },
+49 silly resolved     maintainers: [ [Object], [Object] ],
+49 silly resolved     dist:
+49 silly resolved      { shasum: '3c2e50a58af9ef8c89bee21226b099be1f02739b',
+49 silly resolved        tarball: 'http://registry.npmjs.org/cors/-/cors-2.7.1.tgz' },
+49 silly resolved     directories: {},
+49 silly resolved     _resolved: 'https://registry.npmjs.org/cors/-/cors-2.7.1.tgz' } ]
+50 info install cors@2.7.1 into /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker
+51 info installOne cors@2.7.1
+52 verbose node_modules/cors unbuild
+53 verbose tar unpack /Users/surya/.npm/cors/2.7.1/package.tgz
+54 silly lockFile d99769f3--Recepie-Maker-node-modules-cors tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+55 verbose lock tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors /Users/surya/.npm/d99769f3--Recepie-Maker-node-modules-cors.lock
+56 silly lockFile 9794631b-surya-npm-cors-2-7-1-package-tgz tar:///Users/surya/.npm/cors/2.7.1/package.tgz
+57 verbose lock tar:///Users/surya/.npm/cors/2.7.1/package.tgz /Users/surya/.npm/9794631b-surya-npm-cors-2-7-1-package-tgz.lock
+58 silly gunzTarPerm modes [ '700', '600' ]
+59 silly gunzTarPerm extractEntry package.json
+60 silly gunzTarPerm modified mode [ 'package.json', 420, 384 ]
+61 silly gunzTarPerm extractEntry .npmignore
+62 silly gunzTarPerm modified mode [ '.npmignore', 420, 384 ]
+63 silly gunzTarPerm extractEntry README.md
+64 silly gunzTarPerm modified mode [ 'README.md', 420, 384 ]
+65 silly gunzTarPerm extractEntry LICENSE
+66 silly gunzTarPerm modified mode [ 'LICENSE', 420, 384 ]
+67 silly gunzTarPerm extractEntry CONTRIBUTING.md
+68 silly gunzTarPerm modified mode [ 'CONTRIBUTING.md', 420, 384 ]
+69 silly gunzTarPerm extractEntry .eslintrc
+70 silly gunzTarPerm modified mode [ '.eslintrc', 420, 384 ]
+71 silly gunzTarPerm extractEntry lib/index.js
+72 silly gunzTarPerm modified mode [ 'lib/index.js', 420, 384 ]
+73 silly gunzTarPerm extractEntry .travis.yml
+74 silly gunzTarPerm modified mode [ '.travis.yml', 420, 384 ]
+75 silly gunzTarPerm extractEntry test/basic-auth.js
+76 silly gunzTarPerm modified mode [ 'test/basic-auth.js', 420, 384 ]
+77 silly gunzTarPerm extractEntry test/body-events.js
+78 silly gunzTarPerm modified mode [ 'test/body-events.js', 420, 384 ]
+79 silly gunzTarPerm extractEntry test/cors.js
+80 silly gunzTarPerm modified mode [ 'test/cors.js', 420, 384 ]
+81 silly gunzTarPerm extractEntry test/error-response.js
+82 silly gunzTarPerm modified mode [ 'test/error-response.js', 420, 384 ]
+83 silly gunzTarPerm extractEntry test/example-app.js
+84 silly gunzTarPerm modified mode [ 'test/example-app.js', 420, 384 ]
+85 silly gunzTarPerm extractEntry test/issue-2.js
+86 silly gunzTarPerm modified mode [ 'test/issue-2.js', 420, 384 ]
+87 silly gunzTarPerm extractEntry test/issue-31.js
+88 silly gunzTarPerm modified mode [ 'test/issue-31.js', 420, 384 ]
+89 silly gunzTarPerm extractEntry test/mocha.opts
+90 silly gunzTarPerm modified mode [ 'test/mocha.opts', 420, 384 ]
+91 silly lockFile d99769f3--Recepie-Maker-node-modules-cors tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+92 silly lockFile d99769f3--Recepie-Maker-node-modules-cors tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+93 silly lockFile 9794631b-surya-npm-cors-2-7-1-package-tgz tar:///Users/surya/.npm/cors/2.7.1/package.tgz
+94 silly lockFile 9794631b-surya-npm-cors-2-7-1-package-tgz tar:///Users/surya/.npm/cors/2.7.1/package.tgz
+95 info preinstall cors@2.7.1
+96 verbose readDependencies using package.json deps
+97 verbose readDependencies using package.json deps
+98 verbose cache add [ 'vary@^1', null ]
+99 verbose cache add name=undefined spec="vary@^1" args=["vary@^1",null]
+100 verbose parsed url { protocol: null,
+100 verbose parsed url   slashes: null,
+100 verbose parsed url   auth: null,
+100 verbose parsed url   host: null,
+100 verbose parsed url   port: null,
+100 verbose parsed url   hostname: null,
+100 verbose parsed url   hash: null,
+100 verbose parsed url   search: null,
+100 verbose parsed url   query: null,
+100 verbose parsed url   pathname: 'vary@^1',
+100 verbose parsed url   path: 'vary@^1',
+100 verbose parsed url   href: 'vary@^1' }
+101 verbose cache add name="vary" spec="^1" args=["vary","^1"]
+102 verbose parsed url { protocol: null,
+102 verbose parsed url   slashes: null,
+102 verbose parsed url   auth: null,
+102 verbose parsed url   host: null,
+102 verbose parsed url   port: null,
+102 verbose parsed url   hostname: null,
+102 verbose parsed url   hash: null,
+102 verbose parsed url   search: null,
+102 verbose parsed url   query: null,
+102 verbose parsed url   pathname: '^1',
+102 verbose parsed url   path: '^1',
+102 verbose parsed url   href: '^1' }
+103 verbose addNamed [ 'vary', '^1' ]
+104 verbose addNamed [ null, '>=1.0.0-0 <2.0.0-0' ]
+105 silly lockFile 78aa9a33-vary-1 vary@^1
+106 verbose lock vary@^1 /Users/surya/.npm/78aa9a33-vary-1.lock
+107 silly addNameRange { name: 'vary', range: '>=1.0.0-0 <2.0.0-0', hasData: false }
+108 verbose request where is /vary
+109 verbose request registry https://registry.npmjs.org/
+110 verbose url raw /vary
+111 verbose url resolving [ 'https://registry.npmjs.org/', './vary' ]
+112 verbose url resolved https://registry.npmjs.org/vary
+113 verbose request where is https://registry.npmjs.org/vary
+114 info trying registry request attempt 1 at 23:03:27
+115 verbose etag "82C8BQ32VW3XZ8BHZ48ACKMY0"
+116 http GET https://registry.npmjs.org/vary
+117 http 200 https://registry.npmjs.org/vary
+118 silly registry.get cb [ 200,
+118 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+118 silly registry.get     etag: '"3G2HPTV5YCJU1AQWQ9XE7NEWL"',
+118 silly registry.get     'content-type': 'application/json',
+118 silly registry.get     'cache-control': 'max-age=60',
+118 silly registry.get     'content-length': '8583',
+118 silly registry.get     'accept-ranges': 'bytes',
+118 silly registry.get     date: 'Wed, 22 Jul 2015 03:03:27 GMT',
+118 silly registry.get     via: '1.1 varnish',
+118 silly registry.get     age: '25',
+118 silly registry.get     connection: 'keep-alive',
+118 silly registry.get     'x-served-by': 'cache-iad2122-IAD',
+118 silly registry.get     'x-cache': 'HIT',
+118 silly registry.get     'x-cache-hits': '1',
+118 silly registry.get     'x-timer': 'S1437534207.767666,VS0,VE0',
+118 silly registry.get     vary: 'Accept' } ]
+119 silly addNameRange number 2 { name: 'vary', range: '>=1.0.0-0 <2.0.0-0', hasData: true }
+120 silly addNameRange versions [ 'vary', [ '0.0.0', '0.1.0', '1.0.0', '1.0.1' ] ]
+121 verbose addNamed [ 'vary', '1.0.1' ]
+122 verbose addNamed [ '1.0.1', '1.0.1' ]
+123 silly lockFile 5c54d3d3-vary-1-0-1 vary@1.0.1
+124 verbose lock vary@1.0.1 /Users/surya/.npm/5c54d3d3-vary-1-0-1.lock
+125 silly lockFile 646e2e10-ry-npmjs-org-vary-vary-1-0-1-tgz https://registry.npmjs.org/vary/-/vary-1.0.1.tgz
+126 verbose lock https://registry.npmjs.org/vary/-/vary-1.0.1.tgz /Users/surya/.npm/646e2e10-ry-npmjs-org-vary-vary-1-0-1-tgz.lock
+127 verbose addRemoteTarball [ 'https://registry.npmjs.org/vary/-/vary-1.0.1.tgz',
+127 verbose addRemoteTarball   '99e4981566a286118dfb2b817357df7993376d10' ]
+128 info retry fetch attempt 1 at 23:03:27
+129 verbose fetch to= /var/folders/mq/rdsnl8fx289dnsc1xqpx3w7w0000gn/T/npm-22515-K19WR67w/registry.npmjs.org/vary/-/vary-1.0.1.tgz
+130 http GET https://registry.npmjs.org/vary/-/vary-1.0.1.tgz
+131 http 200 https://registry.npmjs.org/vary/-/vary-1.0.1.tgz
+132 silly lockFile 646e2e10-ry-npmjs-org-vary-vary-1-0-1-tgz https://registry.npmjs.org/vary/-/vary-1.0.1.tgz
+133 silly lockFile 646e2e10-ry-npmjs-org-vary-vary-1-0-1-tgz https://registry.npmjs.org/vary/-/vary-1.0.1.tgz
+134 silly lockFile 5c54d3d3-vary-1-0-1 vary@1.0.1
+135 silly lockFile 5c54d3d3-vary-1-0-1 vary@1.0.1
+136 silly lockFile 78aa9a33-vary-1 vary@^1
+137 silly lockFile 78aa9a33-vary-1 vary@^1
+138 silly resolved [ { name: 'vary',
+138 silly resolved     description: 'Manipulate the HTTP Vary header',
+138 silly resolved     version: '1.0.1',
+138 silly resolved     author:
+138 silly resolved      { name: 'Douglas Christopher Wilson',
+138 silly resolved        email: 'doug@somethingdoug.com' },
+138 silly resolved     license: 'MIT',
+138 silly resolved     keywords: [ 'http', 'res', 'vary' ],
+138 silly resolved     repository: { type: 'git', url: 'https://github.com/jshttp/vary' },
+138 silly resolved     devDependencies: { istanbul: '0.3.17', mocha: '2.2.5', supertest: '1.0.1' },
+138 silly resolved     files: [ 'HISTORY.md', 'LICENSE', 'README.md', 'index.js' ],
+138 silly resolved     engines: { node: '>= 0.8' },
+138 silly resolved     scripts:
+138 silly resolved      { test: 'mocha --reporter spec --bail --check-leaks test/',
+138 silly resolved        'test-cov': 'istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/',
+138 silly resolved        'test-travis': 'istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/' },
+138 silly resolved     gitHead: '650282ff8e614731837040a23e10f51c20728392',
+138 silly resolved     bugs: { url: 'https://github.com/jshttp/vary/issues' },
+138 silly resolved     homepage: 'https://github.com/jshttp/vary',
+138 silly resolved     _id: 'vary@1.0.1',
+138 silly resolved     _shasum: '99e4981566a286118dfb2b817357df7993376d10',
+138 silly resolved     _from: 'vary@^1',
+138 silly resolved     _npmVersion: '1.4.28',
+138 silly resolved     _npmUser: { name: 'dougwilson', email: 'doug@somethingdoug.com' },
+138 silly resolved     maintainers: [ [Object], [Object], [Object] ],
+138 silly resolved     dist:
+138 silly resolved      { shasum: '99e4981566a286118dfb2b817357df7993376d10',
+138 silly resolved        tarball: 'http://registry.npmjs.org/vary/-/vary-1.0.1.tgz' },
+138 silly resolved     directories: {},
+138 silly resolved     _resolved: 'https://registry.npmjs.org/vary/-/vary-1.0.1.tgz' } ]
+139 info install vary@1.0.1 into /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+140 info installOne vary@1.0.1
+141 verbose node_modules/cors/node_modules/vary unbuild
+142 verbose tar unpack /Users/surya/.npm/vary/1.0.1/package.tgz
+143 silly lockFile c1e39535-e-modules-cors-node-modules-vary tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary
+144 verbose lock tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary /Users/surya/.npm/c1e39535-e-modules-cors-node-modules-vary.lock
+145 silly lockFile 620ca00a-surya-npm-vary-1-0-1-package-tgz tar:///Users/surya/.npm/vary/1.0.1/package.tgz
+146 verbose lock tar:///Users/surya/.npm/vary/1.0.1/package.tgz /Users/surya/.npm/620ca00a-surya-npm-vary-1-0-1-package-tgz.lock
+147 silly gunzTarPerm modes [ '700', '600' ]
+148 silly gunzTarPerm extractEntry package.json
+149 silly gunzTarPerm modified mode [ 'package.json', 438, 384 ]
+150 silly gunzTarPerm extractEntry README.md
+151 silly gunzTarPerm modified mode [ 'README.md', 438, 384 ]
+152 silly gunzTarPerm extractEntry LICENSE
+153 silly gunzTarPerm modified mode [ 'LICENSE', 438, 384 ]
+154 silly gunzTarPerm extractEntry index.js
+155 silly gunzTarPerm modified mode [ 'index.js', 438, 384 ]
+156 silly gunzTarPerm extractEntry HISTORY.md
+157 silly gunzTarPerm modified mode [ 'HISTORY.md', 438, 384 ]
+158 silly lockFile c1e39535-e-modules-cors-node-modules-vary tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary
+159 silly lockFile c1e39535-e-modules-cors-node-modules-vary tar:///Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary
+160 silly lockFile 620ca00a-surya-npm-vary-1-0-1-package-tgz tar:///Users/surya/.npm/vary/1.0.1/package.tgz
+161 silly lockFile 620ca00a-surya-npm-vary-1-0-1-package-tgz tar:///Users/surya/.npm/vary/1.0.1/package.tgz
+162 info preinstall vary@1.0.1
+163 verbose readDependencies using package.json deps
+164 verbose readDependencies using package.json deps
+165 silly resolved []
+166 verbose about to build /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary
+167 info build /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules/vary
+168 verbose linkStuff [ false,
+168 verbose linkStuff   false,
+168 verbose linkStuff   false,
+168 verbose linkStuff   '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors/node_modules' ]
+169 info linkStuff vary@1.0.1
+170 verbose linkBins vary@1.0.1
+171 verbose linkMans vary@1.0.1
+172 verbose rebuildBundles vary@1.0.1
+173 info install vary@1.0.1
+174 info postinstall vary@1.0.1
+175 verbose about to build /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+176 info build /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules/cors
+177 verbose linkStuff [ false,
+177 verbose linkStuff   false,
+177 verbose linkStuff   false,
+177 verbose linkStuff   '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/node_modules' ]
+178 info linkStuff cors@2.7.1
+179 verbose linkBins cors@2.7.1
+180 verbose linkMans cors@2.7.1
+181 verbose rebuildBundles cors@2.7.1
+182 verbose rebuildBundles [ 'vary' ]
+183 info install cors@2.7.1
+184 info postinstall cors@2.7.1
+185 verbose saving { cors: '^2.7.1' }
+186 error Error: EACCES, open '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/package.json'
+186 error  { [Error: EACCES, open '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/package.json']
+186 error   errno: 3,
+186 error   code: 'EACCES',
+186 error   path: '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/package.json' }
+187 error Please try running this command again as root/Administrator.
+188 error System Darwin 14.1.0
+189 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "--save-dev" "cors"
+190 error cwd /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker
+191 error node -v v0.10.33
+192 error npm -v 1.4.28
+193 error path /Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/package.json
+194 error code EACCES
+195 error errno 3
+196 error stack Error: EACCES, open '/Users/surya/Documents/Projects/Mesocosmico/Recepie Maker/package.json'
+197 verbose exit [ 3, true ]

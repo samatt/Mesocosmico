@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Mesocosmico Recipe Maker</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.3.0/snap.svg-min.js"> </script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://localhost:3000/countries.css">
+	<!-- <link rel="stylesheet" href="http://45.55.165.85:3000/countries.css"> -->
+	<style>
+/*		@import url(http://fonts.googleapis.com/css?family=Hind:400,700);
+		#svg{
+			width:1440px;
+			height:1000px;	
+		}
+		.object	{
+			fill: blue;
+		}
+
+		.canvas{
+			background-color :red;
+			color:blue;
+		}
+		.text{
+			fill:RGBA(199, 104, 202, 1);
+			font-family: 'Hind', sans-serif;
+			font-size:170px;
+		}*/
+	</style>
+	
+	<!-- // <script src="http://45.55.165.85:3000/patternMaker.js"></script> -->
+	<script src="patternMaker.js"></script>
+	<script>
+		var params = {
+			"icon_viewbox" : "0 0 128 128",
+			"w" : 1440,
+			"h" : 1000,
+			"class":"canvas",
+		}
+		
+		var text;
+		var defaultViewBox ="0 0 128 128";
+		var wid
+		categories = {};
+		var icons_data;
+
+		var icons = {};
+		var p,p1;
+		var s,scope; 
+		$( document ).ready(function(){
+			// var svg = Snap("#svg");	
+			// svg.addClass("canvas");
+			 var w = $(window).width();
+			 var h = $(window).height();
+			 $('#svg').css('width', w/2);
+			 $('#svg').css('height', h);
+
+			 $('#svgother').css('width', w/2);
+			 $('#svgother').css('height', h);
+
+			 var request = $.ajax({
+				type: "GET",
+				url: "/icons.csv",
+				})
+				.done(function(data) {
+
+					icons = data;
+					$.ajax({
+						type: "GET",
+						url: "/hs_classification_list.csv",
+						})
+						.done(function(data) {
+							$('#names').empty()
+							// $('#names').append("Currently diplsying random icons. Set the countries in URL bar like: /texture#gbr-usa &#13;&#10;");
+							p1 = patternMaker(data,'#svgother',icons);
+							p1.generate();
+
+							p= patternMaker(data,'#svg',icons);
+							p.generate();
+						})
+					});
+				// })
+			});
+
+
+
+		$(window).bind( 'hashchange', function(e) { 
+	    	var anchor = document.location.hash;
+	            // p.clear();
+	            countries = anchor.toLowerCase().replace("#","").split('-')
+				updateSvg(countries[0],countries[1],p);
+	            updateSvg(countries[1],countries[0],p1);
+				$('#names').empty();
+				$('#names').append("Left Source: "+countries[0].toUpperCase()+" Left Destination : "+countries[1].toUpperCase()+"&nbsp; ----- &nbsp;  Right Source: "+countries[1].toUpperCase()+" Right Destination: "+countries[0].toUpperCase());
+    	});
+
+		function updateSvg(src,dst,pMaker){
+			var request = $.ajax({
+					type: "POST",
+					url: "/gettradeicons",
+					data:JSON.stringify({"src":src,"dst":dst}),
+					dataType: 'JSON',
+					contentType: 'application/json' 
+				})
+				.done(function(data) {
+					if(data == "Bogus"){
+						$('#names').empty()
+						$('#names').append("didnt work. try again");
+					}
+					else{
+						var ids = JSON.parse(data)
+						pMaker.generateFromList(ids,src,dst);	
+					}
+					
+				})
+				.fail(function() {
+					console.log( "error" );
+					$('#names').empty()
+					$('#names').append("didnt work. try again");
+				})
+
+		}
+		function getRandomInt(min, max) {
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+	</script>
+</head>
+
+
+<body>
+<p style="text-align:center;">
+The More&More textile maker exemplifies the kind of output that we are generating using the More&More dataset. These textiles represent the import and export relationships of two selected countries (list links here for a few different country relationships). The text in the background is from the harmonized system code of categorization for the products exchanged, and in the foreground are iconic representations of some of those products. The background gradients are extrapolated from the colors of flags of their countries of origin. These textiles will eventually be used to make swimsuits, as a nod to the important role of the sea in global shipping. 
+ </p>
+<p id="names" style="text-align:center;"></p>
+<svg id="svg">
+</svg>
+<svg id="svgother"> </svg>
+<!-- <button type="button" onclick="loadSvg()" class="pure-button pure-button-primary pure-u-3-3">Get Arms Categories</button>	 -->
+	<!-- Countries: CHN , USA, JPN, FRA, ARE, NLD, GBR, MEX, IND, AUS, BRA, TUR, RUS  -->
+</body>
+</html>

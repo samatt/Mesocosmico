@@ -71,7 +71,7 @@
 				url: "/icons",
 				})
 				.done(function(data) {
-					console.log(data);
+					// console.log(data);
 					left = mmFactory(data,"#svg");
 					// right = mmFactory(data,"#svgother")
 					// updateSvg("fra","usa",left);	
@@ -90,7 +90,8 @@
 				updateSvg(countries[0],countries[1],left);
 	            // updateSvg(countries[1],countries[0],right);
 				$('#names').empty();
-				$('#names').append("Left Source: "+countries[0].toUpperCase()+" Left Destination : "+countries[1].toUpperCase()+"&nbsp; ----- &nbsp;  Right Source: "+countries[1].toUpperCase()+" Right Destination: "+countries[0].toUpperCase());
+				$('#names').append("Source: "+countries[0].toUpperCase()+" Destination : "+countries[1].toUpperCase());
+				// $('#names').append("Left Source: "+countries[0].toUpperCase()+" Left Destination : "+countries[1].toUpperCase()+"&nbsp; ----- &nbsp;  Right Source: "+countries[1].toUpperCase()+" Right Destination: "+countries[0].toUpperCase());
     	});
 
 		function updateSvgTagged(country,pMaker){
@@ -161,6 +162,6 @@ The More&More textile maker exemplifies the kind of output that we are generatin
 <p id="names" style="text-align:center;"></p>
 <svg id="svg">
 </svg>
-<svg id="svgother"> </svg>
+<!-- <svg id="svgother"> </svg> -->
 </body>
 </html>

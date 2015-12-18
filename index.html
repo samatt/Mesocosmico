@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+<<<<<<< HEAD
 	<title>Mesocosmico Recipe Maker</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script>
@@ -114,3 +115,554 @@
 	
 </body>
 </html>
+=======
+	<title>More&More Recipe Maker</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<!-- <link rel="stylesheet" href="http://localhost:3000/main.css"> -->
+	<link rel="stylesheet" href="http://45.55.165.85:3000/main.css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<script>
+		categories = {}
+		var s; 
+		$( document ).ready(function(){
+			$("#categories").change(getCategoryProducts);
+			$(".products").hide();
+			$(".species").hide();
+			$(".arms").hide();
+			$(".tableHead").hide();
+		});
+		
+		function getRandomInt(min, max) {
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+
+		function getRandItem(currentCategory){
+
+			if(Object.keys(categories).length > 0){
+				var randIndex = getRandomInt(0,categories[currentCategory]["products"].length);
+				return categories[currentCategory]["products"][randIndex];
+			}
+		}
+
+		function displayProducts(currentCategory){
+			$("#selectedProduct").empty();
+			var html = "";
+			var catProducts = categories[currentCategory]["products"];
+			
+			for (var i =0 ; i< catProducts.length; i++) {				
+				html+="<option>"+ catProducts[i]+"</option>";
+			};
+			$("#selectedProduct").append(html);
+		}
+
+		function populateTable(currentCategory){
+			$("#productTable").empty();
+			var html="";
+
+			for (cat in categories) {
+				if(cat !== currentCategory){
+					html+="<tr>";
+					var otherProduct = getRandItem(cat);
+					html+="<td>"+cat+"</td>";
+					html+="<td>"+otherProduct+"</td>";
+					html+="<td>"+categories[cat]["products"].join(" , ")+"</td>";
+					html+="</tr>";
+				}
+			};
+
+			$("#productTable").append(html);
+
+		}
+
+		function displayRandomProduct(currentCategory){
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
+			var html="";
+			html+= "<p> Other possible items </p>"
+
+			var htmlCat="";
+			htmlCat+= "<p> From Category </p>"
+			for (cat in categories) {
+				if(cat !== currentCategory){
+					var otherProduct = getRandItem(cat);
+					html+="<li>"+ otherProduct+"</li>";
+					htmlCat+= "<li>"+ cat+"</li>";
+				}
+			};
+			$("#otherProducts").append(html);
+			$("#otherCategory").append(htmlCat);
+		}
+
+		function getCategoryProducts(){
+			var selectedCategory = $("#categories option:selected").val();
+			displayProducts(selectedCategory);
+		}
+
+		function generateNew(){
+			var selectedCategory = $("#categories option:selected").val();
+			$(".tableHead").show();
+			populateTable(selectedCategory);
+		}
+
+		function loadOptions(data){
+			
+			categories = data;
+			console.log(data);
+			var cats = Object.keys(data);
+			$("#categories").empty();
+			html ="";
+			for (var i = 0; i < cats.length; i++) {
+				if(i !== 0){
+					html+= "<option value='" + cats[i] + "'>" + cats[i] + "</option>";
+				}
+			};
+			$("#categories").append(html);
+			$("select#categories").attr('selectedIndex', 0);
+			getCategoryProducts();
+		}
+
+		function loadSpecies(data){
+			
+			columns = data["shipment_comptab_export"]["column_headers"]
+			// console.log(columns);
+			$("#speciesTable").empty();
+			
+			if (data["hasData"] === false){
+				console.log("No data!");
+				html+="<tr>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="</tr>";
+			}
+			else{
+				rows = data["shipment_comptab_export"]["rows"]
+				
+				var html="";
+				for (var i = 0; i < rows.length; i++) {
+					// console.log(rows[i]);
+
+					if(rows[i]["Source"] === "I" ||
+						 rows[i]["Source"] === "O" ||
+						 rows[i]["Source"] === "U" ||
+						 rows[i]["Source"] === "W" ||
+						 rows[i]["Source"] === "X" ){
+						html+="<tr>";
+						for (var j = 0; j < columns.length; j++) {
+							if(columns[j] === "Taxon" || columns[j] === "Class" ||
+								columns[j] === "Term" || columns[j] === "Purpose" ||
+								columns[j] === "Source"){
+								html+="<td>"+rows[i][columns[j]]+"</td>";
+							}
+						};
+						html+="</tr>";
+					}
+				};
+			}
+			$("#speciesTable").append(html);
+		}
+		function loadArms(data){
+			
+			$("#armsTable").empty();
+			var html="";
+			if(data["hasData"]){
+				rows = data["data"]
+				
+
+				for (var i = rows.length - 1; i >= 0; i--) {
+					if(rows[i]["value"] === "Value"){
+						continue;
+					}
+					html+="<tr>";
+					html+="<td>"+rows[i]["year"]+"</td>";
+					html+="<td>"+rows[i]["type"]+"</td>";
+					html+="<td>"+rows[i]["units"]+"</td>";
+					html+="<td>"+rows[i]["value"]+"</td>";
+					html+="</tr>";
+				};
+			}
+			else{
+				html+="<tr>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="<td> No Data </td>";
+				html+="</tr>";
+			}
+			$("#armsTable").append(html);
+		}
+		function getArms(source,dest){
+
+			var request = $.ajax({
+				type: "POST",
+				url: "/arms",
+				data:JSON.stringify({"src":source,"dst":dest}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					// $(".tableHead").show();
+					// $( ".species" ).show();	
+					$( ".arms" ).show();	
+					console.log(JSON.parse(data));
+					loadArms(JSON.parse(data));
+					
+
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+		}
+
+		function getSpecies(source,dest){
+			var request = $.ajax({
+				type: "POST",
+				url: "/species",
+				data:JSON.stringify({"src":source,"dst":dest}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					// $(".tableHead").show();
+					$( ".species" ).show();	
+					console.log(data);
+					loadSpecies(JSON.parse(data));
+					
+
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+		}
+
+		function getProducts(source, dest) {
+			var request = $.ajax({
+				type: "POST",
+				url: "/products",
+				data:JSON.stringify({"src":source,"dst":dest}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					$( ".products" ).show();
+					loadOptions(data);
+
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+		}
+		function findArms(){
+			var source = $("#source option:selected").val() 
+			var dest = $("#destination option:selected").val()
+			$("#selectedProduct").empty();
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
+			$("#productTable").empty();
+			$("#speciesTable").empty();
+			$(".products").hide();
+			$(".species").hide();
+			$(".arms").hide();
+			// $(".tableHead").hide();
+			// source,dest
+			getArms(source,dest);
+		}
+
+		function findProducts(){
+			var source = $("#source option:selected").val() 
+			var dest = $("#destination option:selected").val()
+			$("#selectedProduct").empty();
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
+			$("#productTable").empty();
+			$("#speciesTable").empty();
+			$(".products").hide();
+			$(".species").hide();
+			$(".arms").hide();
+			$(".tableHead").hide();
+			getProducts(source,dest);
+		}
+		icons = []
+		
+
+		function findSpecies(){
+			var source = $("#source option:selected").val() 
+			var dest = $("#destination option:selected").val()
+			$("#selectedProduct").empty();
+			$("#otherProducts").empty();
+			$("#otherCategory").empty();
+			$("#productTable").empty();
+			$("#speciesTable").empty();
+			$(".products").hide();
+			$(".species").hide();
+			$(".arms").hide();
+			// $(".tableHead").hide()
+			getSpecies(source,dest)
+		}
+		function loadSvgs(){
+			icons = [];
+			var request = $.ajax({
+				type: "GET",
+				url: "/getsvg",
+				data:JSON.stringify({"id":id}),
+				dataType: 'JSON',
+				contentType: 'application/json' 
+				})
+				.done(function(data) {
+					console.log( "success" );
+					$( ".products" ).show();
+					loadOptions(data);
+
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+
+		}
+	</script>
+</head>
+
+
+<body>
+	
+	<form class="pure-form pure-form-stacked">
+		<fieldset>
+			<div id = "Content">
+		 	<legend><div id = "title"><img height = "300px" src = "http://45.55.165.85:3000/containerDecoration.png">MORE & MORE RECIPE MAKER</div></legend>
+		 	<!-- <legend><div id = "title"><img height = "300px" src = "http://localhost:3000/containerDecoration.png">MORE & MORE RECIPE MAKER</div></legend> -->
+		 	<div id = "subtitle">
+
+
+The More&More Recipe Maker is a tool that portrays the relationship between two countries as defined by their exchanged imports and exports. It includes data for countries that are home to some of the world's busiest ports, utilizing the <a href = "http://hts.usitc.gov/">harmonized system code</a> for product categorization.<br><br><br>
+			</div>
+			<center>
+			<div class="pure-g">
+			 	<div class="pure-u-1 pure-u-md-1-2">
+	            	<label for="source">EXPORT COUNTRY</label>
+	            	<select id="source">
+						<option value="chn">China</option>
+						<option value="jpn">Japan</option>
+						<option value="fra">France</option>
+						<option value="nld">Netherlands</option>
+						<option value="rus">Russia</option>
+						<option value="mex">Mexico</option>
+						<option value="ind">India</option>
+						<option value="aus">Australia</option>
+						<option value="bra">Brazil</option>
+						<option value="tur">Turkey</option>
+						<option value="nga">Nigeria</option>
+						<option value="hkg">Hong Kong</option>
+						<option value="isr">Israel</option>
+						<option value="ken">Kenya</option>
+						<option value="kor">South Korea</option>
+						<option value="prk">North Korea</option>
+						<option value="gbr">United Kingdom</option>
+						<option value="usa">United States</option>
+					</select>
+	        	</div>
+	        	<br>
+	        	<div class="pure-u-1 pure-u-md-1-2">
+	            	<label for="destination">IMPORT COUNTRY</label>
+	            	<select id="destination" >
+						<option value="chn">China</option>
+						<option value="jpn">Japan</option>
+						<option value="fra">France</option>
+						<option value="nld">Netherlands</option>
+						<option value="rus">Russia</option>
+						<option value="mex">Mexico</option>
+						<option value="ind">India</option>
+						<option value="aus">Australia</option>
+						<option value="bra">Brazil</option>
+						<option value="tur">Turkey</option>
+						<option value="nga">Nigeria</option>
+						<option value="hkg">Hong Kong</option>
+						<option value="isr">Israel</option>
+						<option value="ken">Kenya</option>
+						<option value="kor">South Korea</option>
+						<option value="prk">North Korea</option>
+						<option value="gbr">United Kingdom</option>
+						<option value="usa">United States</option>
+					</select>
+	        	</div>
+	        </div>
+	        	        	<br>
+
+	        	<button type="button" onclick="findProducts()" class="mybutton">PRODUCT CATEGORIES</button>
+	        	<button type="button" onclick="findSpecies()" class="mybutton">SPECIES CATEGORIES</button>
+	        	<button type="button" onclick="findArms()" class="mybutton">ARMS CATEGORIES</button>
+	        	<button type="button" onclick="drawPattern()" class="mybutton">ARMS CATEGORIES</button>
+	        </center>
+
+	        	<div class="pure-u-1 pure-u-md-1-2 products">
+	        	    <label for="categories">Product Categories</label>
+					<select id="categories">
+					</select>
+	        	</div>
+				<div class="pure-u-1-3 pure-u-md-1-3 products">
+
+					<label for="categories">Products</label>
+					<select id="selectedProduct" >
+					</select>
+        		</div>
+        		<div class="pure-g">
+				<button type="button" onclick="generateNew()" class="pure-button pure-button-primary pure-u-1-6 products">Generate</button>
+	        	</div>
+		</fieldset>
+	</form>
+	<!-- <div class="pure-g"> -->
+		<table class="pure-table pure-table-bordered products">
+			<thead class="tableHead">
+				<tr>
+					<th>Category</th>
+					<th>Randomly Selected Companion</th>
+					<th>All Possible Companions</th>
+				</tr>
+			</thead>
+			<tbody id="productTable">
+			</tbody>
+		</table>
+
+		
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
+				<tr>
+					<th>Source Category</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody id="speciesLengendsTable">
+				<tr>
+					<td>I</td>
+					<td>Confiscated or seized specimens</td>
+
+				</tr>
+				<tr>
+					<td>U</td>
+					<td>Unnown</td>
+				</tr>
+				<tr>
+					<td>W</td>
+					<td>Specimens taken from the wild.</td>
+
+				</tr>
+				<tr>
+					<td>X</td>
+					<td>Specimens taken in "the marine environment not under the jurisdiction of any State"</td>
+				</tr>
+				<tr>
+					<td>O</td>
+					<td>Preconventions Specimens</td>
+				</tr>
+					
+			</tbody>
+		</table>
+
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
+				<tr>
+					<th>Purpose Category</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody id="speciesPurposeTable">
+				<tr>
+					<td>B</td>
+					<td>Breeding in captivity or artificial propagation</td>
+
+				</tr>
+				<tr>
+					<td>E</td>
+					<td>Educational</td>
+				</tr>
+				<tr>
+					<td>G</td>
+					<td>Botanical garden</td>
+
+				</tr>
+				<tr>
+					<td>H</td>
+					<td>Hunting Trophy</td>
+				</tr>
+				<tr>
+					<td>M</td>
+					<td>Medical</td>
+				</tr>
+				<tr>
+					<td>R</td>
+					<td>Reintroduction to the wild</td>
+				</tr>
+				<tr>
+					<td>P</td>
+					<td>Personal</td>
+				</tr>
+				<tr>
+					<td>Q</td>
+					<td>Circus or traveling exhibition</td>
+				</tr>	
+				<tr>
+					<td>S</td>
+					<td>Scientific</td>
+				</tr>	
+				<tr>
+					<td>C</td>
+					<td>Commercial</td>
+				</tr>
+				<tr>
+					<td>Z</td>
+					<td>Zoo</td>
+				</tr>	
+					
+			</tbody>
+		</table>
+
+		<table class="pure-table pure-table-bordered species">
+			<thead class="tableHead">
+				<tr>
+					<!-- <th> "Year"</th> -->
+					<!-- <th> "App."</th> -->
+					<!-- <th> "Order"</th> -->
+					<!-- <th> "Family"</th> -->
+					<!-- <th> "Genus"</th> -->
+					<!-- <th> "Importer"</th> -->
+					<!-- <th> "Exporter"</th> -->
+					<!-- <th> "Origin"</th> -->
+					<!-- <th> "Importer reported quantity"</th> -->
+					<!-- <th> "Exporter reported quantity"</th> -->
+					<!-- <th> "Term"</th> -->
+					<!-- <th> "Unit"</th> -->
+					<th> Taxon</th>
+					<th> Class</th>
+					<th> Purpose</th>
+					<th> Term</th>
+					<th> Source</th>
+				</tr>
+			</thead>
+			<tbody id="speciesTable">
+			</tbody>
+		</table>
+		<table class="pure-table pure-table-bordered arms">
+			<thead>
+				<tr>
+					<th>Year</th>
+					<th>Weapons Type</th>
+					<th>Units</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody id="armsTable">
+			</tbody>
+		</table>
+	<!-- </div> -->
+</body>
+</html>
+>>>>>>> 4ee3c7e02b4a9029c5afb3407fecf3d6e169617f
