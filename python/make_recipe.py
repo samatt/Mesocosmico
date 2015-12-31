@@ -25,7 +25,7 @@ codes_with_icons = [ f.replace(".svg","") for f in os.listdir(ICONS_DIR) if os.p
 
 country_req = "https://atlas.media.mit.edu/attr/country/"
 country_lookup = {}
-country_res = requests.get(country_req, verify=False)
+country_res = requests.get(country_req, verify=True)
 data = json.loads(country_res.text)
 
 with open(CATEGORIES_FILE) as data_file:    
