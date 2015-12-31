@@ -25,7 +25,7 @@ codes_with_icons = [ f.replace(".svg","") for f in os.listdir(ICONS_DIR) if os.p
 
 country_req = "https://atlas.media.mit.edu/attr/country/"
 country_lookup = {}
-country_res = requests.get(country_req, verify=True)
+country_res = requests.get(country_req, verify=False)
 data = json.loads(country_res.text)
 
 with open(CATEGORIES_FILE) as data_file:    
@@ -64,7 +64,7 @@ for row in input_products_reader:
 hs_req = "https://atlas.media.mit.edu/attr/hs07"
 
 hs_lookup = {}
-hs_r = requests.get(hs_req, verify=True)
+hs_r = requests.get(hs_req, verify=False)
 
 data = json.loads(hs_r.text)
 items =  data[u'data']
