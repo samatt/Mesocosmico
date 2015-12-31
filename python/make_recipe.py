@@ -113,7 +113,7 @@ if __name__ == '__main__':
 	# print input_country_abbrv,output_country_abbrv
 	# req = "http://atlas.media.mit.edu/hs/export/all/%s/%s/show"%(input_country_abbrv,output_country_abbrv)
 	# print req
-	req = "http://atlas.media.mit.edu/hs07/export/2010/%s/%s/all"%(input_country_abbrv,output_country_abbrv)
+	req = "http://atlas.media.mit.edu/hs07/import/2010.2012/%s/%s/all"%(input_country_abbrv,output_country_abbrv)
 
 	# req = "http://atlas.media.mit.edu/hs07/export/2010/%s/all/show"%(input_country_abbrv)
 	
